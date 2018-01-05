@@ -1,0 +1,25 @@
+{
+    "name": "olvlvl/elasticsearch-dsl",
+    "description": "An objective query builder for Elasticsearch",
+    "type": "library",
+    "license": "BSD-3",
+    "authors": [
+        {
+            "name": "Olivier Laviale",
+            "email": "olivier.laviale@gmail.com"
+        }
+    ],
+    "autoload": {
+		"psr-4": {
+			"olvlvl\\ElasticsearchDSL\\": "lib"
+		}
+	},
+    "autoload-dev": {
+		"psr-4": {
+			"olvlvl\\ElasticsearchDSL\\": "tests"
+		}
+	},
+    "require": {
+        "icanboogie/accessor": "^1.0"
+    }
+}
