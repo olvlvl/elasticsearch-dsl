@@ -5,16 +5,19 @@ namespace olvlvl\ElasticsearchDSL;
 use ICanBoogie\Accessor\AccessorTrait;
 use olvlvl\ElasticsearchDSL\Query\CompoundQueries;
 use olvlvl\ElasticsearchDSL\Query\HasCompoundQueries;
+use olvlvl\ElasticsearchDSL\Query\HasJoiningQueries;
 use olvlvl\ElasticsearchDSL\Query\HasTextQueries;
+use olvlvl\ElasticsearchDSL\Query\JoiningQueries;
 use olvlvl\ElasticsearchDSL\Query\TextQueries;
 
-class Query implements HasCompoundQueries, HasTextQueries, \JsonSerializable
+class Query implements HasCompoundQueries, HasTextQueries, HasJoiningQueries, \JsonSerializable
 {
 	const NAME = 'query';
 
 	use AccessorTrait;
 	use CompoundQueries;
 	use TextQueries;
+	use JoiningQueries;
 
 	public function __toString()
 	{
@@ -28,7 +31,8 @@ class Query implements HasCompoundQueries, HasTextQueries, \JsonSerializable
 	{
 		return [ self::NAME => Helpers::merge_and_prefer_single(
 			$this->jsonSerializeCompoundQueries(),
-			$this->jsonSerializeTextQueries()
+			$this->jsonSerializeTextQueries(),
+			$this->jsonSerializeJoiningQueries()
 		) ];
 	}
 

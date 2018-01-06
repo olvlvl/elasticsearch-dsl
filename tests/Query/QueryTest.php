@@ -281,6 +281,43 @@ JSON;
 
 			} ],
 
+			[ function (Query $query) {
+				$query->nested("menus")
+					->score_mode('avg')
+					->ignore_unmapped(true)
+					->query->bool->filter
+						->term("menus.week", "2018-W03")
+						->term("menus.product", "express-box");
+
+				return <<<JSON
+{
+    "query": {
+        "nested": {
+            "path": "menus",
+            "score_mode": "avg",
+            "ignore_unmapped": true,
+            "query": {
+                "bool": {
+                    "filter": [
+                        {
+                            "term": {
+                                "menus.week": "2018-W03"
+                            }
+                        },
+                        {
+                            "term": {
+                                "menus.product": "express-box"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
+JSON;
+			} ],
+
 		];
 	}
 
