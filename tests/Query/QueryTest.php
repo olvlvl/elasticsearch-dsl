@@ -16,10 +16,12 @@ class QueryTest extends QueryTestCase
 
 				return <<<EOT
 {
-    "bool": {
-        "must": {
-            "match": {
-                "preference_1": "Apples"
+    "query": {
+        "bool": {
+            "must": {
+                "match": {
+                    "preference_1": "Apples"
+                }
             }
         }
     }
@@ -34,19 +36,21 @@ EOT;
 
 				return <<<EOT
 {
-    "bool": {
-        "must": [
-            {
-                "match": {
-                    "preference_1": "Apples"
+    "query": {
+        "bool": {
+            "must": [
+                {
+                    "match": {
+                        "preference_1": "Apples"
+                    }
+                },
+                {
+                    "match": {
+                        "preference_2": "Bananas"
+                    }
                 }
-            },
-            {
-                "match": {
-                    "preference_2": "Bananas"
-                }
-            }
-        ]
+            ]
+        }
     }
 }
 EOT;
@@ -58,10 +62,12 @@ EOT;
 
 				return <<<EOT
 {
-    "bool": {
-        "must_not": {
-            "match": {
-                "preference_1": "Apples"
+    "query": {
+        "bool": {
+            "must_not": {
+                "match": {
+                    "preference_1": "Apples"
+                }
             }
         }
     }
@@ -77,19 +83,21 @@ EOT;
 
 				return <<<EOT
 {
-    "bool": {
-        "should": [
-            {
-                "match": {
-                    "preference_1": "Apples"
+    "query": {
+        "bool": {
+            "should": [
+                {
+                    "match": {
+                        "preference_1": "Apples"
+                    }
+                },
+                {
+                    "match": {
+                        "preference_2": "Bananas"
+                    }
                 }
-            },
-            {
-                "match": {
-                    "preference_2": "Bananas"
-                }
-            }
-        ]
+            ]
+        }
     }
 }
 EOT;
@@ -108,46 +116,48 @@ EOT;
 
 				return <<<EOT
 {
-    "bool": {
-        "should": [
-            {
-                "bool": {
-                    "must": [
-                        {
-                            "match": {
-                                "preference_1": "Apples"
+    "query": {
+        "bool": {
+            "should": [
+                {
+                    "bool": {
+                        "must": [
+                            {
+                                "match": {
+                                    "preference_1": "Apples"
+                                }
+                            },
+                            {
+                                "match": {
+                                    "preference_2": "Bananas"
+                                }
                             }
-                        },
-                        {
-                            "match": {
-                                "preference_2": "Bananas"
+                        ]
+                    }
+                },
+                {
+                    "bool": {
+                        "must": [
+                            {
+                                "match": {
+                                    "preference_1": "Apples"
+                                }
+                            },
+                            {
+                                "match": {
+                                    "preference_2": "Bananas"
+                                }
                             }
-                        }
-                    ]
+                        ]
+                    }
+                },
+                {
+                    "match": {
+                        "preference_1": "Grapefruit"
+                    }
                 }
-            },
-            {
-                "bool": {
-                    "must": [
-                        {
-                            "match": {
-                                "preference_1": "Apples"
-                            }
-                        },
-                        {
-                            "match": {
-                                "preference_2": "Bananas"
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "match": {
-                    "preference_1": "Grapefruit"
-                }
-            }
-        ]
+            ]
+        }
     }
 }
 EOT;
@@ -166,51 +176,53 @@ EOT;
 
 				return <<<JSON
 {
-    "bool": {
-        "filter": {
-            "term": {
-                "grade": "2"
-            }
-        },
-        "should": [
-            {
-                "bool": {
-                    "must": [
-                        {
-                            "match": {
-                                "preference_1": "Apples"
-                            }
-                        },
-                        {
-                            "match": {
-                                "preference_2": "Bananas"
-                            }
-                        }
-                    ]
+    "query": {
+        "bool": {
+            "filter": {
+                "term": {
+                    "grade": "2"
                 }
             },
-            {
-                "bool": {
-                    "must": [
-                        {
-                            "match": {
-                                "preference_1": "Apples"
+            "should": [
+                {
+                    "bool": {
+                        "must": [
+                            {
+                                "match": {
+                                    "preference_1": "Apples"
+                                }
+                            },
+                            {
+                                "match": {
+                                    "preference_2": "Bananas"
+                                }
                             }
-                        },
-                        {
-                            "match": {
-                                "preference_2": "Cherries"
+                        ]
+                    }
+                },
+                {
+                    "bool": {
+                        "must": [
+                            {
+                                "match": {
+                                    "preference_1": "Apples"
+                                }
+                            },
+                            {
+                                "match": {
+                                    "preference_2": "Cherries"
+                                }
                             }
-                        }
-                    ]
+                        ]
+                    }
+                },
+                {
+                    "match": {
+                        "preference_1": "Grapefruit"
+                    }
                 }
-            },
-            {
-                "match": {
-                    "preference_1": "Grapefruit"
-                }
-            }
-        ]
+            ]
+        }
     }
 }
 JSON;
@@ -233,34 +245,36 @@ JSON;
 
 				return <<<JSON
 {
-    "bool": {
-        "must": {
-            "term": {
-                "user": "kimchy"
-            }
-        },
-        "should": [
-            {
+    "query": {
+        "bool": {
+            "must": {
                 "term": {
-                    "tag": "wow"
+                    "user": "kimchy"
                 }
             },
-            {
-                "term": {
-                    "tag": "elasticsearch"
+            "should": [
+                {
+                    "term": {
+                        "tag": "wow"
+                    }
+                },
+                {
+                    "term": {
+                        "tag": "elasticsearch"
+                    }
                 }
-            }
-        ],
-        "must_not": {
-            "range": {
-                "age": {
-                    "from": 10,
-                    "to": 10
+            ],
+            "must_not": {
+                "range": {
+                    "age": {
+                        "from": 10,
+                        "to": 10
+                    }
                 }
-            }
-        },
-        "minimum_should_match": 1,
-        "boost": 1.5
+            },
+            "minimum_should_match": 1,
+            "boost": 1.5
+        }
     }
 }
 JSON;

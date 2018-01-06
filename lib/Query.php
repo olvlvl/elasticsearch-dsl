@@ -10,6 +10,8 @@ use olvlvl\ElasticsearchDSL\Query\TextQueries;
 
 class Query implements HasCompoundQueries, HasTextQueries, \JsonSerializable
 {
+	const NAME = 'query';
+
 	use AccessorTrait;
 	use CompoundQueries;
 	use TextQueries;
@@ -24,10 +26,10 @@ class Query implements HasCompoundQueries, HasTextQueries, \JsonSerializable
 	 */
 	public function jsonSerialize()
 	{
-		return Helpers::merge_and_prefer_single(
+		return [ self::NAME => Helpers::merge_and_prefer_single(
 			$this->jsonSerializeCompoundQueries(),
 			$this->jsonSerializeTextQueries()
-		);
+		) ];
 	}
 
 	public function to_array(): array
