@@ -24,6 +24,19 @@ JSON;
 			} ],
 
 			[ function (Query $query) {
+				$query->match_none();
+
+				return <<<JSON
+{
+    "query": {
+        "match_none": {}
+    }
+}
+JSON;
+
+			} ],
+
+			[ function (Query $query) {
 				$query->bool->must
 					->match("preference_1", "Apples");
 

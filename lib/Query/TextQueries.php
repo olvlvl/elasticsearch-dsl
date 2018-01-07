@@ -4,6 +4,7 @@ namespace olvlvl\ElasticsearchDSL\Query;
 
 use olvlvl\ElasticsearchDSL\Helpers;
 use olvlvl\ElasticsearchDSL\Query\Text\MatchAllQuery;
+use olvlvl\ElasticsearchDSL\Query\Text\MatchNoneQuery;
 use olvlvl\ElasticsearchDSL\Query\Text\MatchPhrasePrefixQuery;
 use olvlvl\ElasticsearchDSL\Query\Text\MatchPhraseQuery;
 use olvlvl\ElasticsearchDSL\Query\Text\MatchQuery;
@@ -19,6 +20,18 @@ trait TextQueries
 	public function match_all(array $options = [])
 	{
 		$this->match_all[] = new MatchAllQuery($options);
+
+		return $this;
+	}
+
+	/**
+	 * @var MatchNoneQuery[]
+	 */
+	private $match_none = [];
+
+	public function match_none()
+	{
+		$this->match_none[] = new MatchNoneQuery();
 
 		return $this;
 	}
@@ -75,6 +88,7 @@ trait TextQueries
 	{
 		return Helpers::filter_merge(
 			$this->match_all,
+			$this->match_none,
 			$this->match,
 			$this->match_phrase,
 			$this->match_phrase_prefix,
