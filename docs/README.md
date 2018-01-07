@@ -15,6 +15,7 @@ have a look at the [Query][1] chapter.
         - [multi_match](Query/Text/MultiMatch.md)
     - Term level queries
         - [exists](Query/Term/Exists.md)
+        - [ids](Query/Term/Ids.md)
         - [fuzzy](Query/Term/Fuzzy.md)
 
 [1]: Query.md
