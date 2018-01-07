@@ -4,6 +4,7 @@ namespace olvlvl\ElasticsearchDSL\Query;
 
 use olvlvl\ElasticsearchDSL\Helpers;
 use olvlvl\ElasticsearchDSL\Query\Compound\BoolQuery;
+use olvlvl\ElasticsearchDSL\Query\Compound\ConstantScoreQuery;
 
 /**
  * @property-read BoolQuery $bool
@@ -17,22 +18,42 @@ trait CompoundQueries
 
 	protected function get_bool()
 	{
-		$bool = reset($this->bool_queries);
+		$query = reset($this->bool_queries);
 
-		return $bool ? $bool : $this->bool();
+		return $query ? $query : $this->bool();
 	}
 
 	public function bool(): BoolQuery
 	{
-		$this->bool_queries[] = $bool = new BoolQuery();
+		$this->bool_queries[] = $query = new BoolQuery();
 
-		return $bool;
+		return $query;
+	}
+
+	/**
+	 * @var ConstantScoreQuery[]
+	 */
+	private $constant_score_queries = [];
+
+	protected function get_constant_score()
+	{
+		$query = reset($this->constant_score_queries);
+
+		return $query ? $query : $this->constant_score();
+	}
+
+	public function constant_score(float $score = 1.0): ConstantScoreQuery
+	{
+		$this->constant_score_queries[] = $query = new ConstantScoreQuery($score);
+
+		return $query;
 	}
 
 	protected function jsonSerializeCompoundQueries(): array
 	{
 		return Helpers::filter_merge(
-			$this->bool_queries
+			$this->bool_queries,
+			$this->constant_score_queries
 		);
 	}
 }

@@ -117,7 +117,7 @@ class BoolQuery extends QueryAbstract implements HasBoostOption
 	 */
 	public function jsonSerialize()
 	{
-		return [ self::NAME => array_filter([
+		return [ static::NAME => array_filter([
 
 			MustQuery::NAME => $this->must->jsonSerialize(),
 			FilterQuery::NAME => $this->filter->jsonSerialize(),

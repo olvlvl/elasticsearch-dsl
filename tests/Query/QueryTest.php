@@ -391,6 +391,25 @@ JSON;
 JSON;
 			} ],
 
+			[ function (Query $query) {
+				$query->constant_score(1.2)->filter->term("user", "kimchy");
+
+				return <<<JSON
+{
+    "query": {
+        "constant_score": {
+            "filter": {
+                "term": {
+                    "user": "kimchy"
+                }
+            },
+            "boost": 1.2
+        }
+    }
+}
+JSON;
+			} ]
+
 		];
 	}
 
