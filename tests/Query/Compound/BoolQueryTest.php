@@ -2,19 +2,76 @@
 
 namespace olvlvl\ElasticsearchDSL\Query\Compound;
 
-use olvlvl\ElasticsearchDSL\Query\QueryTestCase;
+use olvlvl\ElasticsearchDSL\Query\Term\RangeQuery;
+use olvlvl\ElasticsearchDSL\Query\TestCase;
 
-class BoolQueryTest extends QueryTestCase
+class BoolQueryTest extends TestCase
 {
 	public function provideSerialization(): array
 	{
 		return [
 
-			[ function (BoolQuery $query) {
-				$query->must
-					->term("preference_1", "Apples");
+			[
+				[], function (BoolQuery $query) {
+					$query->minimum_should_match(1)
+						->boost(1.5);
+					$query->must->term("user", "kimchy");
+					$query->filter->term("tag", "tech");
+					$query->must_not->range("age", function (RangeQuery $range) {
+						$range->gte(10)->lte(20);
+					});
+					$query->should
+						->term("tag", "wow")
+						->term("tag", "elasticsearch");
 
-				return <<<JSON
+					return <<<JSON
+{
+    "bool": {
+        "must": {
+            "term": {
+                "user": "kimchy"
+            }
+        },
+        "filter": {
+            "term": {
+                "tag": "tech"
+            }
+        },
+        "should": [
+            {
+                "term": {
+                    "tag": "wow"
+                }
+            },
+            {
+                "term": {
+                    "tag": "elasticsearch"
+                }
+            }
+        ],
+        "must_not": {
+            "range": {
+                "age": {
+                    "gte": 10,
+                    "lte": 20
+                }
+            }
+        },
+        "minimum_should_match": 1,
+        "boost": 1.5
+    }
+}
+JSON;
+
+				}
+			],
+
+			[
+				[], function (BoolQuery $query) {
+					$query->must
+						->term("preference_1", "Apples");
+
+					return <<<JSON
 {
     "bool": {
         "must": {
@@ -25,9 +82,10 @@ class BoolQueryTest extends QueryTestCase
     }
 }
 JSON;
-			} ],
+				}
+			],
 
-			[ function (BoolQuery $query) {
+			[ [], function (BoolQuery $query) {
 				$query->must
 					->term("preference_1", "Apples")
 					->term("preference_2", "Banana");
@@ -52,7 +110,7 @@ JSON;
 JSON;
 			} ],
 
-			[ function (BoolQuery $query) {
+			[ [], function (BoolQuery $query) {
 				$query->must
 					->term("preference_1", "Apples")
 					->term("preference_2", "Banana")
@@ -86,7 +144,7 @@ JSON;
 JSON;
 			} ],
 
-			[ function (BoolQuery $query) {
+			[ [], function (BoolQuery $query) {
 				$query->must
 					->term("preference_1", "Apples")
 					->term("preference_2", "Banana")
@@ -134,7 +192,7 @@ JSON;
 JSON;
 			} ],
 
-			[ function (BoolQuery $query) {
+			[ [], function (BoolQuery $query) {
 				$query->filter
 					->term("field_1", "one");
 				$query->must->bool->filter
@@ -165,8 +223,8 @@ JSON;
 		];
 	}
 
-	protected function makeInstance()
+	protected function makeInstance(array $args)
 	{
-		return new BoolQuery;
+		return new BoolQuery(...$args);
 	}
 }
