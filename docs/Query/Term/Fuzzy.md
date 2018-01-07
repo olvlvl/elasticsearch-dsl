@@ -44,4 +44,8 @@ $query = (new FuzzyQuery('user', "ki"))
     ->max_expansions(100);
 ```
 
+
+
+
+
 [1]: https://www.elastic.co/guide/en/elasticsearch/reference/5.6/query-dsl-fuzzy-query.html
