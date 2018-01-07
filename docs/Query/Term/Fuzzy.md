@@ -4,8 +4,8 @@
 
 ```json
 {
-    "fuzzy" : {
-        "user" : "ki"
+    "fuzzy": {
+        "user": "ki"
     }
 }
 ```

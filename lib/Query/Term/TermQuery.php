@@ -2,6 +2,7 @@
 
 namespace olvlvl\ElasticsearchDSL\Query\Term;
 
+use olvlvl\ElasticsearchDSL\Query\Helpers\JsonSerializeAsSimpleOrExtended;
 use olvlvl\ElasticsearchDSL\Query\Option\BoostOption;
 use olvlvl\ElasticsearchDSL\Query\Option\HasBoostOption;
 use olvlvl\ElasticsearchDSL\Query\QueryAbstract;
@@ -12,6 +13,9 @@ use olvlvl\ElasticsearchDSL\Query\QueryAbstract;
 class TermQuery extends QueryAbstract implements HasBoostOption
 {
 	use BoostOption;
+	use JsonSerializeAsSimpleOrExtended {
+		jsonSerializeAsSimpleOrExtended as public jsonSerialize;
+	}
 
 	const NAME = 'term';
 
@@ -42,17 +46,5 @@ class TermQuery extends QueryAbstract implements HasBoostOption
 		$this->value = $value;
 
 		parent::__construct($options);
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	public function jsonSerialize()
-	{
-		return [
-			self::NAME => [
-				$this->field => $this->value
-			] + parent::jsonSerialize()
-		];
 	}
 }

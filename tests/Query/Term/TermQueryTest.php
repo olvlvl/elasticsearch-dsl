@@ -2,27 +2,53 @@
 
 namespace olvlvl\ElasticsearchDSL\Query\Term;
 
-class TermQueryTest extends TestCase
+class TermQueryTest extends \olvlvl\ElasticsearchDSL\Query\TestCase
 {
-	public function getQueryClass(): string
-	{
-		return TermQuery::class;
-	}
-
 	public function provideSerialization(): array
 	{
 		return [
 
 			[
-				[ $term = uniqid(), $value = uniqid() ],
-				[ $term => $value ],
+				[
+					'user', 'Kimchy'
+				],
+				function (TermQuery $query) {
+					return <<<JSON
+{
+    "term": {
+        "user": "Kimchy"
+    }
+}
+JSON;
+				}
 			],
 
 			[
-				[ $term = uniqid(), $value = uniqid(), [ TermQuery::OPTION_BOOST => $boost = mt_rand(1, 10) + .5 ] ],
-				[ $term => $value, 'boost' => $boost ],
+				[
+					'user', 'Kimchy'
+				],
+				function (TermQuery $query) {
+					$query
+						->boost(1.5);
+
+					return <<<JSON
+{
+    "term": {
+        "user": {
+            "value": "Kimchy",
+            "boost": 1.5
+        }
+    }
+}
+JSON;
+				}
 			],
 
 		];
+	}
+
+	protected function makeInstance(array $args)
+	{
+		return new TermQuery(...$args);
 	}
 }

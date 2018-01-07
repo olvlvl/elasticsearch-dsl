@@ -20,5 +20,6 @@ have a look at the [Query][1] chapter.
         - [prefix](Query/Term/Prefix.md)
         - [range](Query/Term/Range.md)
         - [regexp](Query/Term/Regexp.md)
+        - [term](Query/Term/Term.md)
 
 [1]: Query.md
