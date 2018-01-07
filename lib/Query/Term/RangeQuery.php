@@ -26,6 +26,7 @@ class RangeQuery extends QueryAbstract implements HasBoostOption
 	const OPTION_GT = 'gt';
 	const OPTION_LTE = 'lte';
 	const OPTION_LT = 'lt';
+	const OPTION_FORMAT = 'format';
 
 	protected const OPTIONS = [
 
@@ -35,6 +36,7 @@ class RangeQuery extends QueryAbstract implements HasBoostOption
 		self::OPTION_GT,
 		self::OPTION_LTE,
 		self::OPTION_LT,
+		self::OPTION_FORMAT,
 		self::OPTION_BOOST,
 
 	];
@@ -118,6 +120,18 @@ class RangeQuery extends QueryAbstract implements HasBoostOption
 	public function lt($value = null)
 	{
 		$this->options[self::OPTION_LT] = $value;
+
+		return $this;
+	}
+
+	/**
+	 * @param string $format
+	 *
+	 * @return $this
+	 */
+	public function format(string $format)
+	{
+		$this->options[self::OPTION_FORMAT] = $format;
 
 		return $this;
 	}

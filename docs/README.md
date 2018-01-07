@@ -17,5 +17,6 @@ have a look at the [Query][1] chapter.
         - [exists](Query/Term/Exists.md)
         - [ids](Query/Term/Ids.md)
         - [fuzzy](Query/Term/Fuzzy.md)
+        - [range](Query/Term/Range.md)
 
 [1]: Query.md

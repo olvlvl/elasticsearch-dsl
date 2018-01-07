@@ -95,6 +95,23 @@ class RangeQueryTest extends TestCase
 
 			[
 				[
+					'born', [
+						RangeQuery::OPTION_GTE => "01/01/2012",
+						RangeQuery::OPTION_LTE => "2013",
+						RangeQuery::OPTION_FORMAT => "dd/MM/yyyy||yyyy",
+					]
+				],
+				[
+					'born' => [
+						'gte' => "01/01/2012",
+						'lte' => "2013",
+						'format' => "dd/MM/yyyy||yyyy",
+					]
+				]
+			],
+
+			[
+				[
 					$field = uniqid(), [
 						RangeQuery::OPTION_GTE => $gte,
 						RangeQuery::OPTION_GT => $gt,
