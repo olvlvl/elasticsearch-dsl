@@ -14,6 +14,7 @@ have a look at the [Query][1] chapter.
         - [match_phrase_prefix](Query/Text/MatchPhrasePrefix.md)
         - [multi_match](Query/Text/MultiMatch.md)
     - Term level queries
+        - [exists](Query/Term/Exists.md)
         - [fuzzy](Query/Term/Fuzzy.md)
 
 [1]: Query.md
