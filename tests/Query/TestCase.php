@@ -15,9 +15,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 		$instance = $this->makeInstance($args);
 		$expected = $builder($instance);
 
-		$json = json_encode($instance, JSON_PRETTY_PRINT);
-
-		$this->assertSame($expected, $json);
+		$this->assertSame($expected, (string) $instance);
 	}
 
 	abstract public function provideSerialization(): array;

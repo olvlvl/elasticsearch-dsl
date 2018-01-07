@@ -38,6 +38,53 @@ JSON;
 
 			[ function (Query $query) {
 				$query->bool->must
+					->match('title', "Search")
+					->match('content', "Elasticsearch");
+				$query->bool->filter
+					->term('status', 'published')
+					->range('publish_date', [
+						Query\Term\RangeQuery::OPTION_GTE => "2015-01-01"
+					]);
+
+				return <<<JSON
+{
+    "query": {
+        "bool": {
+            "must": [
+                {
+                    "match": {
+                        "title": "Search"
+                    }
+                },
+                {
+                    "match": {
+                        "content": "Elasticsearch"
+                    }
+                }
+            ],
+            "filter": [
+                {
+                    "term": {
+                        "status": "published"
+                    }
+                },
+                {
+                    "range": {
+                        "publish_date": {
+                            "gte": "2015-01-01"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}
+JSON;
+
+			} ],
+
+			[ function (Query $query) {
+				$query->bool->must
 					->match("preference_1", "Apples");
 
 				return <<<EOT

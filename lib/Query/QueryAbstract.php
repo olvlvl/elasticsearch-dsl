@@ -18,11 +18,12 @@ abstract class QueryAbstract implements \JsonSerializable
 		$this->handle_options($options, static::OPTIONS);
 	}
 
-	protected function handle_options(array $options, array $possible_options): void
+	/**
+	 * @inheritdoc
+	 */
+	public function __toString()
 	{
-		foreach ($options as $option => $value) {
-			$this->{ $option }($value);
-		}
+		return json_encode($this, JSON_PRETTY_PRINT);
 	}
 
 	/**
@@ -31,5 +32,12 @@ abstract class QueryAbstract implements \JsonSerializable
 	public function jsonSerialize()
 	{
 		return Helpers::filter_not_null($this->options);
+	}
+
+	protected function handle_options(array $options, array $possible_options): void
+	{
+		foreach ($options as $option => $value) {
+			$this->{ $option }($value);
+		}
 	}
 }
