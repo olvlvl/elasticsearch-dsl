@@ -21,5 +21,6 @@ have a look at the [Query][1] chapter.
         - [range](Query/Term/Range.md)
         - [regexp](Query/Term/Regexp.md)
         - [term](Query/Term/Term.md)
+        - [terms](Query/Term/Terms.md)
 
 [1]: Query.md
