@@ -13,9 +13,9 @@
 
 use olvlvl\ElasticsearchDSL\Query\Text\MatchNoneQuery;
 
-$match = new MatchNoneQuery;
+$query = new MatchNoneQuery;
 
-echo $match;
+echo $query;
 ```
 
 [1]: https://www.elastic.co/guide/en/elasticsearch/reference/5.6/query-dsl-match-all-query.html#query-dsl-match-none-query

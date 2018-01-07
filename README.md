@@ -4,192 +4,56 @@ The `olvlvl/elasticsearch-dsl` package provides an objective query builder for E
 helps you create [Elasticsearch](https://www.elastic.co/products/elasticsearch) queries using
 the same language as you would use writing arrays by hand.
 
-I created this library because I found using [ongr-io/ElasticsearchDSL](https://github.com/ongr-io/ElasticsearchDSL), the only other available option, very cumbersome, and I wanted an interface that would feel more natural regarding Elasticsearch language.
+I created this library because I found using
+[ongr-io/ElasticsearchDSL](https://github.com/ongr-io/ElasticsearchDSL), the only other
+available option, very cumbersome, and I wanted an interface that would feel more natural
+regarding Elasticsearch language.
 
-### Disclaimer
-
-I've been working on this library since January, it's far from being feature complete, but I'm getting there :) If you feel like helping please submit a PR.
-
+> I've been working on this library since January, it's far from being feature complete, but I'm
+> getting there :) If you'd like to help please submit a PR.
 
 
 
 
-## Examples
 
-The following example demonstrates how a simple boolean query can be created: 
+### A simple example
 
-```php
-<?php
+Here is a simple example, take from [Elasticsearch documentation][1]. More are available in
+[our documentation](docs/README.md).
 
-use olvlvl\ElasticsearchDSL\Query;
-
-$query = new Query; 
-$query->bool->must
-	->term("user", "kimchy");
-$query->bool->must_not
-	->range("age", function (Query\Term\RangeQuery $range) {
-		$range->from(10)->to(10);
-	});
-$query->bool->should
-	->term("tag", "wow")
-	->term("tag", "elasticsearch");
-$query->bool
-	->minimum_should_match(1)
-	->boost(1.5);
-
-echo $query;
-```
 ```json
 {
     "query": {
         "bool": {
-            "must": {
-                "term": {
-                    "user": "kimchy"
-                }
-            },
-            "should": [
-                {
-                    "term": {
-                        "tag": "wow"
-                    }
-                },
-                {
-                    "term": {
-                        "tag": "elasticsearch"
-                    }
-                }
+            "must": [
+                { "match": { "title": "Search" } },
+                { "match": { "content": "Elasticsearch" } }
             ],
-            "must_not": {
-                "range": {
-                    "age": {
-                        "from": 10,
-                        "to": 10
-                    }
-                }
-            },
-            "minimum_should_match": 1,
-            "boost": 1.5
-        }
-    }
-}
-```
-
-The following example demonstrates how to create a _should_ query with two _bool_ queries:
-
-```php
-<?php
-
-use olvlvl\ElasticsearchDSL\Query;
-
-$query = new Query; 
-$query->bool->should->bool()->must
-	->match("preference_1", "Apples")
-	->match("preference_2", "Bananas");
-$query->bool->should->bool()->must
-	->match("preference_1", "Apples")
-	->match("preference_2", "Cherries");
-$query->bool->should->match("preference_1", "Grapefruit");
-$query->bool->filter->term("grade", "2");
-
-echo $query;
-```
-```json
-{
-    "query": {
-        "bool": {
-            "filter": {
-                "term": {
-                    "grade": "2"
-                }
-            },
-            "should": [
-                {
-                    "bool": {
-                        "must": [
-                            {
-                                "match": {
-                                    "preference_1": "Apples"
-                                }
-                            },
-                            {
-                                "match": {
-                                    "preference_2": "Bananas"
-                                }
-                            }
-                        ]
-                    }
-                },
-                {
-                    "bool": {
-                        "must": [
-                            {
-                                "match": {
-                                    "preference_1": "Apples"
-                                }
-                            },
-                            {
-                                "match": {
-                                    "preference_2": "Cherries"
-                                }
-                            }
-                        ]
-                    }
-                },
-                {
-                    "match": {
-                        "preference_1": "Grapefruit"
-                    }
-                }
+            "filter": [
+                { "term": { "status": "published" } },
+                { "range": { "publish_date": { "gte": "2015-01-01" } } }
             ]
         }
     }
 }
 ```
-
-The following example demonstrates how to create a nested query:
-
 ```php
 <?php
 
 use olvlvl\ElasticsearchDSL\Query;
 
-$query = new Query; 
-$query->nested("menus")
-	->score_mode('avg')
-	->ignore_unmapped(true)
-	->query->bool->filter
-		->term("menus.week", "2018-W03")
-		->term("menus.product", "express-box");
-echo $query;
+$query = new Query;
+$query->bool->must
+    ->match('title', "Search")
+    ->match('content', "Elasticsearch");
+$query->bool->filter
+    ->term('status', 'published')
+    ->range('publish_date', [
+        Query\Term\RangeQuery::OPTION_GTE => "2015-01-01"
+    ]);
 ```
-```json
-{
-    "query": {
-        "nested": {
-            "path": "menus",
-            "score_mode": "avg",
-            "ignore_unmapped": true,
-            "query": {
-                "bool": {
-                    "filter": [
-                        {
-                            "term": {
-                                "menus.week": "2018-W03"
-                            }
-                        },
-                        {
-                            "term": {
-                                "menus.product": "express-box"
-                            }
-                        }
-                    ]
-                }
-            }
-        }
-    }
-}
-```
+
+[See more examples](docs/README.md)
 
 
 
@@ -221,7 +85,7 @@ The recommended way to install this package is through [Composer](http://getcomp
 
 ### Cloning the repository
 
-The package is [available on GitHub][https://github.com/olvlvl/elasticsearch-dsl],
+The package is [available on GitHub](https://github.com/olvlvl/elasticsearch-dsl),
 its repository can be cloned with the following command line:
 
 	$ git clone https://github.com/olvlvl/elasticsearch-dsl.git
@@ -260,3 +124,10 @@ The package is continuously tested by [Travis CI](http://about.travis-ci.org/).
 ## License
 
 **olvlvl/elasticsearch-dsl** is licensed under the New BSD License - See the [LICENSE](LICENSE) file for details.
+
+
+
+
+
+
+[1]: https://www.elastic.co/guide/en/elasticsearch/reference/5.6/query-filter-context.html
