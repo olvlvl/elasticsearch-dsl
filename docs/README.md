@@ -22,5 +22,6 @@ have a look at the [Query][1] chapter.
         - [regexp](Query/Term/Regexp.md)
         - [term](Query/Term/Term.md)
         - [terms](Query/Term/Terms.md)
+        - [type](Query/Term/Type.md)
 
 [1]: Query.md
