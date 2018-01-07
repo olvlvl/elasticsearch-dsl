@@ -2,7 +2,6 @@
 
 namespace olvlvl\ElasticsearchDSL\Query\Text;
 
-use olvlvl\ElasticsearchDSL\Query\Helpers\JsonSerializeAsSimpleOrExtended;
 use olvlvl\ElasticsearchDSL\Query\Option\HasMatchOptions;
 use olvlvl\ElasticsearchDSL\Query\Option\MatchOptions;
 use olvlvl\ElasticsearchDSL\Query\QueryAbstract;
@@ -10,7 +9,6 @@ use olvlvl\ElasticsearchDSL\Query\QueryAbstract;
 class MultiMatchQuery extends QueryAbstract implements HasMatchOptions
 {
 	use MatchOptions;
-	use JsonSerializeAsSimpleOrExtended;
 
 	const NAME = 'multi_match';
 

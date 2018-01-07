@@ -20,7 +20,7 @@ class IdsQuery extends QueryAbstract
 	];
 
 	/**
-	 * @var string
+	 * @var array
 	 */
 	private $values;
 

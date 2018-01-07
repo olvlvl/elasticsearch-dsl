@@ -39,13 +39,13 @@ class TermsQuery extends QueryAbstract
 	private $field;
 
 	/**
-	 * @var mixed
+	 * @var array
 	 */
 	private $values;
 
 	/**
 	 * @param string $field
-	 * @param mixed $values
+	 * @param array $values
 	 * @param array $options
 	 */
 	public function __construct(string $field, array $values, array $options = [])

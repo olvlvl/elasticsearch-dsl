@@ -38,7 +38,7 @@ class BoolQuery extends QueryAbstract implements HasBoostOption
 	/**
 	 * @var MustQuery
 	 */
-	private $must = [];
+	private $must;
 
 	/**
 	 * @return MustQuery
