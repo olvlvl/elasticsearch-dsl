@@ -24,5 +24,11 @@ have a look at the [Query][1] chapter.
         - [terms](Query/Term/Terms.md)
         - [type](Query/Term/Type.md)
         - [wildcard](Query/Term/Wildcard.md)
+    - Joining
+        - [nested](Query/Joining/Nested.md)
+
+
+
+
 
 [1]: Query.md
