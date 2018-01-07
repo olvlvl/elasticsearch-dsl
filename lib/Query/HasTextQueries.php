@@ -5,6 +5,13 @@ namespace olvlvl\ElasticsearchDSL\Query;
 interface HasTextQueries
 {
 	/**
+	 * @param array $options
+	 *
+	 * @return $this
+	 */
+	public function match_all(array $options = []);
+
+	/**
 	 * @param string $field
 	 * @param string $query
 	 * @param array $options

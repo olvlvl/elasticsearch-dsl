@@ -11,6 +11,19 @@ class QueryTest extends QueryTestCase
 		return [
 
 			[ function (Query $query) {
+				$query->match_all();
+
+				return <<<JSON
+{
+    "query": {
+        "match_all": {}
+    }
+}
+JSON;
+
+			} ],
+
+			[ function (Query $query) {
 				$query->bool->must
 					->match("preference_1", "Apples");
 

@@ -3,6 +3,7 @@
 namespace olvlvl\ElasticsearchDSL\Query;
 
 use olvlvl\ElasticsearchDSL\Helpers;
+use olvlvl\ElasticsearchDSL\Query\Text\MatchAllQuery;
 use olvlvl\ElasticsearchDSL\Query\Text\MatchPhrasePrefixQuery;
 use olvlvl\ElasticsearchDSL\Query\Text\MatchPhraseQuery;
 use olvlvl\ElasticsearchDSL\Query\Text\MatchQuery;
@@ -10,6 +11,18 @@ use olvlvl\ElasticsearchDSL\Query\Text\MultiMatchQuery;
 
 trait TextQueries
 {
+	/**
+	 * @var MatchAllQuery[]
+	 */
+	private $match_all = [];
+
+	public function match_all(array $options = [])
+	{
+		$this->match_all[] = new MatchAllQuery($options);
+
+		return $this;
+	}
+
 	/**
 	 * @var MatchQuery[]
 	 */
@@ -61,6 +74,7 @@ trait TextQueries
 	protected function jsonSerializeTextQueries(): array
 	{
 		return Helpers::filter_merge(
+			$this->match_all,
 			$this->match,
 			$this->match_phrase,
 			$this->match_phrase_prefix,
