@@ -23,5 +23,6 @@ have a look at the [Query][1] chapter.
         - [term](Query/Term/Term.md)
         - [terms](Query/Term/Terms.md)
         - [type](Query/Term/Type.md)
+        - [wildcard](Query/Term/Wildcard.md)
 
 [1]: Query.md
