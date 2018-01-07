@@ -1,5 +1,11 @@
 # ElasticsearchDSL
 
+[![Release](https://img.shields.io/packagist/v/olvlvl/elasticsearch-dsl.svg)](https://packagist.org/packages/olvlvl/elasticsearch-dsl)
+[![Build Status](https://img.shields.io/travis/olvlvl/elasticsearch-dsl.svg)](http://travis-ci.org/olvlvl/elasticsearch-dsl)
+[![Code Quality](https://img.shields.io/scrutinizer/g/olvlvl/elasticsearch-dsl.svg)](https://scrutinizer-ci.com/g/olvlvl/elasticsearch-dsl)
+[![Code Coverage](https://img.shields.io/coveralls/olvlvl/elasticsearch-dsl.svg)](https://coveralls.io/r/olvlvl/elasticsearch-dsl)
+[![Packagist](https://img.shields.io/packagist/dt/olvlvl/elasticsearch-dsl.svg)](https://packagist.org/packages/olvlvl/elasticsearch-dsl)
+
 The `olvlvl/elasticsearch-dsl` package provides an objective query builder for Elasticsearch. It
 helps you create [Elasticsearch](https://www.elastic.co/products/elasticsearch) queries using
 the same language as you would use writing arrays by hand.
