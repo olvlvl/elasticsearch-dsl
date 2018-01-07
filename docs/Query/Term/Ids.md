@@ -4,8 +4,8 @@
 
 ```json
 {
-    "ids" : {
-        "type" : "my_type",
+    "ids": {
+        "type": "my_type",
         "values": [ "1", "4", "100" ]
     }
 }
