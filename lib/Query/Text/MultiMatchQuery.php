@@ -12,9 +12,6 @@ class MultiMatchQuery extends QueryAbstract implements HasMatchOptions
 
 	const NAME = 'multi_match';
 
-	private const OPTION_TYPE = 'type';
-	private const OPTION_TIE_BREAKER = 'tie_breaker';
-
 	/**
 	 * @var array
 	 */
@@ -33,14 +30,14 @@ class MultiMatchQuery extends QueryAbstract implements HasMatchOptions
 
 	public function type(?string $type)
 	{
-		$this->options[self::OPTION_TYPE] = $type;
+		$this->options[__FUNCTION__] = $type;
 
 		return $this;
 	}
 
 	public function tie_breaker(?float $tie_breaker)
 	{
-		$this->options[self::OPTION_TIE_BREAKER] = $tie_breaker;
+		$this->options[__FUNCTION__] = $tie_breaker;
 
 		return $this;
 	}

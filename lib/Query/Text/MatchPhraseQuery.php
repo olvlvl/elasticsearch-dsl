@@ -10,7 +10,6 @@ class MatchPhraseQuery extends QueryAbstract
 	use JsonSerializeAsSimpleOrExtended;
 
 	const NAME = 'match_phrase';
-	private const OPTION_ANALYZER = 'analyzer';
 
 	/**
 	 * @var string
@@ -30,7 +29,7 @@ class MatchPhraseQuery extends QueryAbstract
 
 	public function analyzer(?string $analyser)
 	{
-		$this->options[self::OPTION_ANALYZER] = $analyser;
+		$this->options[__FUNCTION__] = $analyser;
 
 		return $this;
 	}

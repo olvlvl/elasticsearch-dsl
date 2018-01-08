@@ -8,21 +8,21 @@ trait MatchOptions
 
 	public function operator(?string $operator)
 	{
-		$this->options[self::OPTION_OPERATOR] = $operator;
+		$this->options[__FUNCTION__] = $operator;
 
 		return $this;
 	}
 
 	public function zero_terms_query(?string $zero_terms_query)
 	{
-		$this->options[self::OPTION_ZERO_TERMS_QUERY] = $zero_terms_query;
+		$this->options[__FUNCTION__] = $zero_terms_query;
 
 		return $this;
 	}
 
 	public function cutoff_frequency(?float $cutoff_frequency)
 	{
-		$this->options[self::OPTION_CUTOFF_FREQUENCY] = $cutoff_frequency;
+		$this->options[__FUNCTION__] = $cutoff_frequency;
 
 		return $this;
 	}

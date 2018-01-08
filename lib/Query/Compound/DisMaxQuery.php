@@ -15,7 +15,6 @@ class DisMaxQuery extends QueryAbstract implements HasBoostOption
 	use BoostOption;
 
 	const NAME = 'dis_max';
-	private const OPTION_TIE_BREAKER = 'tie_breaker';
 
 	/**
 	 * @var QueryCollection
@@ -35,7 +34,7 @@ class DisMaxQuery extends QueryAbstract implements HasBoostOption
 
 	public function tie_breaker(float $tie_breaker)
 	{
-		$this->options[self::OPTION_TIE_BREAKER] = $tie_breaker;
+		$this->options[__FUNCTION__] = $tie_breaker;
 
 		return $this;
 	}

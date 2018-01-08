@@ -11,12 +11,6 @@ class TermsQuery extends QueryAbstract
 {
 	const NAME = 'terms';
 
-	private const OPTION_INDEX = 'index';
-	private const OPTION_TYPE = 'type';
-	private const OPTION_ID = 'id';
-	private const OPTION_PATH = 'path';
-	private const OPTION_ROUTING = 'routing';
-
 	/**
 	 * @var string
 	 */
@@ -44,7 +38,7 @@ class TermsQuery extends QueryAbstract
 	 */
 	public function index(?string $index)
 	{
-		$this->options[self::OPTION_INDEX] = $index;
+		$this->options[__FUNCTION__] = $index;
 
 		return $this;
 	}
@@ -56,7 +50,7 @@ class TermsQuery extends QueryAbstract
 	 */
 	public function type(?string $type)
 	{
-		$this->options[self::OPTION_TYPE] = $type;
+		$this->options[__FUNCTION__] = $type;
 
 		return $this;
 	}
@@ -68,7 +62,7 @@ class TermsQuery extends QueryAbstract
 	 */
 	public function id(?string $id)
 	{
-		$this->options[self::OPTION_ID] = $id;
+		$this->options[__FUNCTION__] = $id;
 
 		return $this;
 	}
@@ -80,7 +74,7 @@ class TermsQuery extends QueryAbstract
 	 */
 	public function path(?string $path)
 	{
-		$this->options[self::OPTION_PATH] = $path;
+		$this->options[__FUNCTION__] = $path;
 
 		return $this;
 	}
@@ -92,7 +86,7 @@ class TermsQuery extends QueryAbstract
 	 */
 	public function routing(?string $routing)
 	{
-		$this->options[self::OPTION_ROUTING] = $routing;
+		$this->options[__FUNCTION__] = $routing;
 
 		return $this;
 	}

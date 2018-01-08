@@ -17,9 +17,6 @@ class NestedQuery extends QueryAbstract
 
 	const NAME = 'nested';
 
-	private const OPTION_SCORE_MODE = 'score_mode';
-	private const OPTION_IGNORE_UNMAPPED = 'ignore_unmapped';
-
 	/**
 	 * @var string
 	 */
@@ -48,7 +45,7 @@ class NestedQuery extends QueryAbstract
 	 */
 	public function score_mode(?string $score_mode)
 	{
-		$this->options[self::OPTION_SCORE_MODE] = $score_mode;
+		$this->options[__FUNCTION__] = $score_mode;
 
 		return $this;
 	}
@@ -60,7 +57,7 @@ class NestedQuery extends QueryAbstract
 	 */
 	public function ignore_unmapped(bool $ignore_unmapped)
 	{
-		$this->options[self::OPTION_IGNORE_UNMAPPED] = $ignore_unmapped;
+		$this->options[__FUNCTION__] = $ignore_unmapped;
 
 		return $this;
 	}

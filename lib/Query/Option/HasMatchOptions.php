@@ -4,15 +4,24 @@ namespace olvlvl\ElasticsearchDSL\Query\Option;
 
 interface HasMatchOptions extends HasFuzzyOptions
 {
-	const OPTION_OPERATOR = 'operator';
-	const OPTION_ZERO_TERMS_QUERY = 'zero_terms_query';
-	const OPTION_CUTOFF_FREQUENCY = 'cutoff_frequency';
+	/**
+	 * @param null|string $operator
+	 *
+	 * @return $this
+	 */
+	public function operator(?string $operator);
 
-	const MATCH_OPTIONS = [
+	/**
+	 * @param null|string $zero_terms_query
+	 *
+	 * @return $this
+	 */
+	public function zero_terms_query(?string $zero_terms_query);
 
-		self::OPTION_OPERATOR,
-		self::OPTION_ZERO_TERMS_QUERY,
-		self::OPTION_CUTOFF_FREQUENCY,
-
-	] + self::FUZZY_OPTIONS;
+	/**
+	 * @param float|null $cutoff_frequency
+	 *
+	 * @return $this
+	 */
+	public function cutoff_frequency(?float $cutoff_frequency);
 }

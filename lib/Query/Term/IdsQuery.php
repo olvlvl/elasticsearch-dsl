@@ -11,8 +11,6 @@ class IdsQuery extends QueryAbstract
 {
 	const NAME = 'ids';
 
-	private const OPTION_TYPE = 'type';
-
 	/**
 	 * @var array
 	 */
@@ -33,7 +31,7 @@ class IdsQuery extends QueryAbstract
 	 */
 	public function type(?string $type)
 	{
-		$this->options[self::OPTION_TYPE] = $type;
+		$this->options[__FUNCTION__] = $type;
 
 		return $this;
 	}

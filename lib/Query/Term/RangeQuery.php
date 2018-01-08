@@ -20,14 +20,6 @@ class RangeQuery extends QueryAbstract implements HasBoostOption
 
 	const NAME = 'range';
 
-	private const OPTION_FROM = 'from';
-	private const OPTION_TO = 'to';
-	private const OPTION_GTE = 'gte';
-	private const OPTION_GT = 'gt';
-	private const OPTION_LTE = 'lte';
-	private const OPTION_LT = 'lt';
-	private const OPTION_FORMAT = 'format';
-
 	/**
 	 * @var string
 	 */
@@ -45,7 +37,7 @@ class RangeQuery extends QueryAbstract implements HasBoostOption
 	 */
 	public function from($value = null)
 	{
-		$this->options[self::OPTION_FROM] = $value;
+		$this->options[__FUNCTION__] = $value;
 
 		return $this;
 	}
@@ -57,7 +49,7 @@ class RangeQuery extends QueryAbstract implements HasBoostOption
 	 */
 	public function to($value = null)
 	{
-		$this->options[self::OPTION_TO] = $value;
+		$this->options[__FUNCTION__] = $value;
 
 		return $this;
 	}
@@ -69,7 +61,7 @@ class RangeQuery extends QueryAbstract implements HasBoostOption
 	 */
 	public function gte($value = null)
 	{
-		$this->options[self::OPTION_GTE] = $value;
+		$this->options[__FUNCTION__] = $value;
 
 		return $this;
 	}
@@ -81,7 +73,7 @@ class RangeQuery extends QueryAbstract implements HasBoostOption
 	 */
 	public function gt($value = null)
 	{
-		$this->options[self::OPTION_GT] = $value;
+		$this->options[__FUNCTION__] = $value;
 
 		return $this;
 	}
@@ -93,7 +85,7 @@ class RangeQuery extends QueryAbstract implements HasBoostOption
 	 */
 	public function lte($value = null)
 	{
-		$this->options[self::OPTION_LTE] = $value;
+		$this->options[__FUNCTION__] = $value;
 
 		return $this;
 	}
@@ -105,7 +97,7 @@ class RangeQuery extends QueryAbstract implements HasBoostOption
 	 */
 	public function lt($value = null)
 	{
-		$this->options[self::OPTION_LT] = $value;
+		$this->options[__FUNCTION__] = $value;
 
 		return $this;
 	}
@@ -117,7 +109,7 @@ class RangeQuery extends QueryAbstract implements HasBoostOption
 	 */
 	public function format(string $format)
 	{
-		$this->options[self::OPTION_FORMAT] = $format;
+		$this->options[__FUNCTION__] = $format;
 
 		return $this;
 	}

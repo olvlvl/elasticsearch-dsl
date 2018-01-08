@@ -25,7 +25,6 @@ class BoolQuery extends QueryAbstract implements HasBoostOption
 	use BoostOption;
 
 	const NAME = 'bool';
-	private const OPTION_MINIMUM_SHOULD_MATCH = 'minimum_should_match';
 
 	/**
 	 * @var MustQuery
@@ -94,7 +93,7 @@ class BoolQuery extends QueryAbstract implements HasBoostOption
 	 */
 	public function minimum_should_match(?int $minimum_should_match)
 	{
-		$this->options[self::OPTION_MINIMUM_SHOULD_MATCH] = $minimum_should_match;
+		$this->options[__FUNCTION__] = $minimum_should_match;
 
 		return $this;
 	}

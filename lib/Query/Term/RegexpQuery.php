@@ -22,9 +22,6 @@ class RegexpQuery extends QueryAbstract implements HasBoostOption
 
 	const NAME = 'regexp';
 
-	private const OPTION_FLAGS = 'flags';
-	private const OPTION_MAX_DETERMINIZED_STATES = 'max_determinized_states';
-
 	/**
 	 * @var string
 	 */
@@ -43,14 +40,14 @@ class RegexpQuery extends QueryAbstract implements HasBoostOption
 
 	public function flags(?string $flags)
 	{
-		$this->options[self::OPTION_FLAGS] = $flags;
+		$this->options[__FUNCTION__] = $flags;
 
 		return $this;
 	}
 
 	public function max_determinized_states(?int $max_determinized_states)
 	{
-		$this->options[self::OPTION_MAX_DETERMINIZED_STATES] = $max_determinized_states;
+		$this->options[__FUNCTION__] = $max_determinized_states;
 
 		return $this;
 	}
