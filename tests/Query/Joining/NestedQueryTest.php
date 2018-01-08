@@ -12,17 +12,7 @@ class NestedQueryTest extends TestCase
 		return [
 
 			[
-				[
-					'obj1'
-				],
-				function (NestedQuery $query) {
-					$query->score_mode('avg')
-						->query->bool->must
-						->match('obj1.name', "blue")
-						->range('obj1.count', function (RangeQuery $range) {
-							$range->gt(5);
-						});
-					return <<<JSON
+				<<<JSON
 {
     "nested": {
         "path": "obj1",
@@ -47,9 +37,17 @@ class NestedQueryTest extends TestCase
         }
     }
 }
-JSON;
+JSON
+				, [ 'obj1' ],
+				function (NestedQuery $query) {
+					$query->score_mode('avg')
+						->query->bool->must
+						->match('obj1.name', "blue")
+						->range('obj1.count', function (RangeQuery $range) {
+							$range->gt(5);
+						});
 				}
-			]
+			],
 
 		];
 	}

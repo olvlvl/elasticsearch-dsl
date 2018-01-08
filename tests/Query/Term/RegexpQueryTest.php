@@ -2,36 +2,27 @@
 
 namespace olvlvl\ElasticsearchDSL\Query\Term;
 
-class RegexpQueryTest extends \olvlvl\ElasticsearchDSL\Query\TestCase
+use olvlvl\ElasticsearchDSL\Query\TestCase;
+
+class RegexpQueryTest extends TestCase
 {
 	public function provideSerialization(): array
 	{
 		return [
 
 			[
-				[
-					'name.first', "s.*y"
-				],
-				function (RegexpQuery $query) {
-					return <<<JSON
+				<<<JSON
 {
     "regexp": {
         "name.first": "s.*y"
     }
 }
-JSON;
-				}
+JSON
+				, [ 'name.first', "s.*y" ]
 			],
 
 			[
-				[
-					'name.first', "s.*y"
-				],
-				function (RegexpQuery $query) {
-					$query
-						->boost(1.5);
-
-					return <<<JSON
+				<<<JSON
 {
     "regexp": {
         "name.first": {
@@ -40,7 +31,10 @@ JSON;
         }
     }
 }
-JSON;
+JSON
+				, [ 'name.first', "s.*y" ],
+				function (RegexpQuery $query) {
+					$query->boost(1.5);
 				}
 			],
 

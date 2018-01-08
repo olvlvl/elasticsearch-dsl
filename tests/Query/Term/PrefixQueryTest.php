@@ -2,36 +2,27 @@
 
 namespace olvlvl\ElasticsearchDSL\Query\Term;
 
-class PrefixQueryTest extends \olvlvl\ElasticsearchDSL\Query\TestCase
+use olvlvl\ElasticsearchDSL\Query\TestCase;
+
+class PrefixQueryTest extends TestCase
 {
 	public function provideSerialization(): array
 	{
 		return [
 
 			[
-				[
-					'user', 'ki'
-				],
-				function (PrefixQuery $query) {
-					return <<<JSON
+				<<<JSON
 {
     "prefix": {
         "user": "ki"
     }
 }
-JSON;
-				}
+JSON
+				, [ 'user', 'ki' ]
 			],
 
 			[
-				[
-					'user', 'ki'
-				],
-				function (PrefixQuery $query) {
-					$query
-						->boost(1.5);
-
-					return <<<JSON
+				<<<JSON
 {
     "prefix": {
         "user": {
@@ -40,7 +31,11 @@ JSON;
         }
     }
 }
-JSON;
+JSON
+				, [ 'user', 'ki' ],
+				function (PrefixQuery $query) {
+					$query
+						->boost(1.5);
 				}
 			],
 

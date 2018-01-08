@@ -2,36 +2,27 @@
 
 namespace olvlvl\ElasticsearchDSL\Query\Term;
 
-class WildcardQueryTest extends \olvlvl\ElasticsearchDSL\Query\TestCase
+use olvlvl\ElasticsearchDSL\Query\TestCase;
+
+class WildcardQueryTest extends TestCase
 {
 	public function provideSerialization(): array
 	{
 		return [
 
 			[
-				[
-					'user', "ki*y"
-				],
-				function (WildcardQuery $query) {
-					return <<<JSON
+				<<<JSON
 {
     "wildcard": {
         "user": "ki*y"
     }
 }
-JSON;
-				}
+JSON
+				, [ 'user', "ki*y" ]
 			],
 
 			[
-				[
-					'user', "ki*y"
-				],
-				function (WildcardQuery $query) {
-					$query
-						->boost(1.5);
-
-					return <<<JSON
+				<<<JSON
 {
     "wildcard": {
         "user": {
@@ -40,7 +31,10 @@ JSON;
         }
     }
 }
-JSON;
+JSON
+				, [ 'user', "ki*y" ],
+				function (WildcardQuery $query) {
+					$query->boost(1.5);
 				}
 			],
 

@@ -11,15 +11,11 @@ class MatchNoneQueryTest extends TestCase
 		return [
 
 			[
-				[
-				],
-				function () {
-					return <<<JSON
+				<<<JSON
 {
     "match_none": {}
 }
-JSON;
-				}
+JSON
 			],
 
 		];
@@ -27,6 +23,6 @@ JSON;
 
 	protected function makeInstance(array $args)
 	{
-		return new MatchNoneQuery(...$args);
+		return new MatchNoneQuery;
 	}
 }

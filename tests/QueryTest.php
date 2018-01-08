@@ -1,50 +1,59 @@
 <?php
 
-namespace olvlvl\ElasticsearchDSL\Query;
+namespace olvlvl\ElasticsearchDSL;
 
-use olvlvl\ElasticsearchDSL\Query;
+use olvlvl\ElasticsearchDSL\Query\TestCase;
 
-class QueryTest extends QueryTestCase
+class QueryTest extends TestCase
 {
+	public function testToArray()
+	{
+		$this->assertEquals([ 'query' => (object) [] ], (new Query)->to_array());
+	}
+
 	public function provideSerialization(): array
 	{
 		return [
 
-			[ function (Query $query) {
-				$query->match_all();
+			[
+				<<<JSON
+{
+    "query": {}
+}
+JSON
+			],
 
-				return <<<JSON
+			[
+				<<<JSON
 {
     "query": {
         "match_all": {}
     }
 }
-JSON;
-			} ],
+JSON
+				,
+				[],
+				function (Query $query) {
+					$query->match_all();
+				}
+			],
 
-			[ function (Query $query) {
-				$query->match_none();
-
-				return <<<JSON
+			[
+				<<<JSON
 {
     "query": {
         "match_none": {}
     }
 }
-JSON;
-			} ],
+JSON
+			, [],
+			function (Query $query) {
+				$query->match_none();
+				}
+			],
 
-			[ function (Query $query) {
-				$query->bool->must
-					->match('title', "Search")
-					->match('content', "Elasticsearch");
-				$query->bool->filter
-					->term('status', 'published')
-					->range('publish_date', function (Query\Term\RangeQuery $range) {
-						$range->gte("2015-01-01");
-					});
-
-				return <<<JSON
+			[
+				<<<JSON
 {
     "query": {
         "bool": {
@@ -77,14 +86,22 @@ JSON;
         }
     }
 }
-JSON;
-			} ],
-
-			[ function (Query $query) {
+JSON
+			, [],
+			function (Query $query) {
 				$query->bool->must
-					->match("preference_1", "Apples");
+					->match('title', "Search")
+					->match('content', "Elasticsearch");
+				$query->bool->filter
+					->term('status', 'published')
+					->range('publish_date', function (Query\Term\RangeQuery $range) {
+						$range->gte("2015-01-01");
+					});
+				}
+			],
 
-				return <<<JSON
+			[
+				<<<JSON
 {
     "query": {
         "bool": {
@@ -96,15 +113,16 @@ JSON;
         }
     }
 }
-JSON;
-			} ],
+JSON
+				, [],
+				function (Query $query) {
+					$query->bool->must
+						->match("preference_1", "Apples");
+				}
+			],
 
-			[ function (Query $query) {
-				$query->bool->must
-					->match("preference_1", "Apples")
-					->match("preference_2", "Bananas");
-
-				return <<<JSON
+			[
+				<<<JSON
 {
     "query": {
         "bool": {
@@ -123,14 +141,17 @@ JSON;
         }
     }
 }
-JSON;
-			} ],
+JSON
+				, [],
+				function (Query $query) {
+					$query->bool->must
+						->match("preference_1", "Apples")
+						->match("preference_2", "Bananas");
+				}
+			],
 
-			[ function (Query $query) {
-				$query->bool->must_not
-					->match("preference_1", "Apples");
-
-				return <<<JSON
+			[
+				<<<JSON
 {
     "query": {
         "bool": {
@@ -142,15 +163,16 @@ JSON;
         }
     }
 }
-JSON;
-			} ],
+JSON
+				, [],
+				function (Query $query) {
+					$query->bool->must_not
+						->match("preference_1", "Apples");
+				}
+			],
 
-			[ function (Query $query) {
-				$query->bool->should
-					->match("preference_1", "Apples")
-					->match("preference_2", "Bananas");
-
-				return <<<JSON
+			[
+				<<<JSON
 {
     "query": {
         "bool": {
@@ -169,21 +191,17 @@ JSON;
         }
     }
 }
-JSON;
-			} ],
+JSON
+				, [],
+				function (Query $query) {
+					$query->bool->should
+						->match("preference_1", "Apples")
+						->match("preference_2", "Bananas");
+				}
+			],
 
-			[ function (Query $query) {
-				$query->bool->should->bool()->must
-					->match("preference_1", "Apples")
-					->match("preference_2", "Bananas");
-
-				$query->bool->should->bool()->must
-					->match("preference_1", "Apples")
-					->match("preference_2", "Bananas");
-
-				$query->bool->should->match("preference_1", "Grapefruit");
-
-				return <<<JSON
+			[
+				<<<JSON
 {
     "query": {
         "bool": {
@@ -229,20 +247,23 @@ JSON;
         }
     }
 }
-JSON;
-			} ],
+JSON
+				, [],
+				function (Query $query) {
+					$query->bool->should->bool()->must
+						->match("preference_1", "Apples")
+						->match("preference_2", "Bananas");
 
-			[ function (Query $query) {
-				$query->bool->should->bool()->must
-					->match("preference_1", "Apples")
-					->match("preference_2", "Bananas");
-				$query->bool->should->bool()->must
-					->match("preference_1", "Apples")
-					->match("preference_2", "Cherries");
-				$query->bool->should->match("preference_1", "Grapefruit");
-				$query->bool->filter->term("grade", "2");
+					$query->bool->should->bool()->must
+						->match("preference_1", "Apples")
+						->match("preference_2", "Bananas");
 
-				return <<<JSON
+					$query->bool->should->match("preference_1", "Grapefruit");
+				}
+			],
+
+			[
+				<<<JSON
 {
     "query": {
         "bool": {
@@ -293,24 +314,22 @@ JSON;
         }
     }
 }
-JSON;
-			} ],
+JSON
+				, [],
+				function (Query $query) {
+					$query->bool->should->bool()->must
+						->match("preference_1", "Apples")
+						->match("preference_2", "Bananas");
+					$query->bool->should->bool()->must
+						->match("preference_1", "Apples")
+						->match("preference_2", "Cherries");
+					$query->bool->should->match("preference_1", "Grapefruit");
+					$query->bool->filter->term("grade", "2");
+				}
+			],
 
-			[ function (Query $query) {
-				$query->bool->must
-					->term("user", "kimchy");
-				$query->bool->must_not
-					->range("age", function (Query\Term\RangeQuery $range) {
-						$range->from(10)->to(10);
-					});
-				$query->bool->should
-					->term("tag", "wow")
-					->term("tag", "elasticsearch");
-				$query->bool
-					->minimum_should_match(1)
-					->boost(1.5);
-
-				return <<<JSON
+			[
+				<<<JSON
 {
     "query": {
         "bool": {
@@ -344,18 +363,26 @@ JSON;
         }
     }
 }
-JSON;
-			} ],
+JSON
+				, [],
+				function (Query $query) {
+					$query->bool->must
+						->term("user", "kimchy");
+					$query->bool->must_not
+						->range("age", function (Query\Term\RangeQuery $range) {
+							$range->from(10)->to(10);
+						});
+					$query->bool->should
+						->term("tag", "wow")
+						->term("tag", "elasticsearch");
+					$query->bool
+						->minimum_should_match(1)
+						->boost(1.5);
+				}
+			],
 
-			[ function (Query $query) {
-				$query->nested("menus")
-					->score_mode('avg')
-					->ignore_unmapped(true)
-					->query->bool->filter
-						->term("menus.week", "2018-W03")
-						->term("menus.product", "express-box");
-
-				return <<<JSON
+			[
+				<<<JSON
 {
     "query": {
         "nested": {
@@ -381,13 +408,20 @@ JSON;
         }
     }
 }
-JSON;
-			} ],
+JSON
+				, [],
+				function (Query $query) {
+					$query->nested("menus")
+						->score_mode('avg')
+						->ignore_unmapped(true)
+						->query->bool->filter
+							->term("menus.week", "2018-W03")
+							->term("menus.product", "express-box");
+				}
+			],
 
-			[ function (Query $query) {
-				$query->constant_score(1.2)->filter->term("user", "kimchy");
-
-				return <<<JSON
+			[
+				<<<JSON
 {
     "query": {
         "constant_score": {
@@ -400,14 +434,15 @@ JSON;
         }
     }
 }
-JSON;
-			} ],
+JSON
+				, [],
+				function (Query $query) {
+					$query->constant_score(1.2)->filter->term("user", "kimchy");
+				}
+			],
 
-			[ function (Query $query) {
-				$query->boosting(.2)->positive->term("field1", "value1");
-				$query->boosting->negative->term("field2", "value2");
-
-				return <<<JSON
+			[
+				<<<JSON
 {
     "query": {
         "boosting": {
@@ -425,15 +460,16 @@ JSON;
         }
     }
 }
-JSON;
-			} ],
+JSON
+				, [],
+				function (Query $query) {
+					$query->boosting(.2)->positive->term("field1", "value1");
+					$query->boosting->negative->term("field2", "value2");
+				}
+			],
 
-			[ function (Query $query) {
-				$query->dis_max->tie_breaker(0.7)->boost(1.2);
-				$query->dis_max->queries->term("age", 34);
-				$query->dis_max->queries->term("age", 35);
-
-				return <<<JSON
+			[
+				<<<JSON
 {
     "query": {
         "dis_max": {
@@ -454,17 +490,17 @@ JSON;
         }
     }
 }
-JSON;
-			} ],
+JSON
+				, [],
+				function (Query $query) {
+					$query->dis_max->tie_breaker(0.7)->boost(1.2);
+					$query->dis_max->queries->term("age", 34);
+					$query->dis_max->queries->term("age", 35);
+				}
+			],
 
-			[ function (Query $query) {
-				$query->bool->filter
-					->term('tags.slug', "under-30-minutes");
-				$query->bool->must->nested("menus")->query->bool->filter
-					->term("menus.product", "express-box")
-					->term("menus.week", "2018-W03");
-
-				return <<<JSON
+			[
+				<<<JSON
 {
     "query": {
         "bool": {
@@ -497,14 +533,22 @@ JSON;
         }
     }
 }
-JSON;
-			} ],
+JSON
+				, [],
+				function (Query $query) {
+					$query->bool->filter
+						->term('tags.slug', "under-30-minutes");
+					$query->bool->must->nested("menus")->query->bool->filter
+						->term("menus.product", "express-box")
+						->term("menus.week", "2018-W03");
+				}
+			],
 
 		];
 	}
 
-	protected function makeInstance()
+	protected function makeInstance(array $args)
 	{
-		return new Query();
+		return new Query;
 	}
 }

@@ -2,16 +2,16 @@
 
 namespace olvlvl\ElasticsearchDSL\Query\Term;
 
-class TermsQueryTest extends \olvlvl\ElasticsearchDSL\Query\TestCase
+use olvlvl\ElasticsearchDSL\Query\TestCase;
+
+class TermsQueryTest extends TestCase
 {
 	public function provideSerialization(): array
 	{
 		return [
 
 			[
-				[ 'field1', [ 'value1', 'value2' ] ],
-				function (TermsQuery $query) {
-					return <<<JSON
+				<<<JSON
 {
     "terms": {
         "field1": [
@@ -20,21 +20,12 @@ class TermsQueryTest extends \olvlvl\ElasticsearchDSL\Query\TestCase
         ]
     }
 }
-JSON;
-				}
+JSON
+				, [ 'field1', [ 'value1', 'value2' ] ]
 			],
 
 			[
-				[ 'dummy', [] ],
-				function (TermsQuery $query) {
-					$query
-						->index('my_index')
-						->type('my_type')
-						->id("123")
-						->path('my_path')
-						->routing('my_routing');
-
-					return <<<JSON
+				<<<JSON
 {
     "terms": {
         "index": "my_index",
@@ -44,7 +35,15 @@ JSON;
         "routing": "my_routing"
     }
 }
-JSON;
+JSON
+				, [ 'dummy', [] ],
+				function (TermsQuery $query) {
+					$query
+						->index('my_index')
+						->type('my_type')
+						->id("123")
+						->path('my_path')
+						->routing('my_routing');
 				}
 			],
 

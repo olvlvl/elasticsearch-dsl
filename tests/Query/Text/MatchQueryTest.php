@@ -11,18 +11,14 @@ class MatchQueryTest extends TestCase
 		return [
 
 			[
-				[
-					'message', "this is a test"
-				],
-				function () {
-					return <<<JSON
+				<<<JSON
 {
     "match": {
         "message": "this is a test"
     }
 }
-JSON;
-				}
+JSON
+				, [ 'message', "this is a test" ]
 			],
 
 		];

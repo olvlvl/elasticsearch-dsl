@@ -11,14 +11,7 @@ class DisMaxQueryTest extends TestCase
 		return [
 
 			[
-				[
-				],
-				function (DisMaxQuery $query) {
-					$query->queries->term("age", 34);
-					$query->queries->term("age", 35);
-					$query->tie_breaker(0.7)->boost(1.2);
-
-					return <<<JSON
+				<<<JSON
 {
     "dis_max": {
         "tie_breaker": 0.7,
@@ -37,8 +30,12 @@ class DisMaxQueryTest extends TestCase
         ]
     }
 }
-JSON;
-
+JSON
+				, [],
+				function (DisMaxQuery $query) {
+					$query->queries->term("age", 34);
+					$query->queries->term("age", 35);
+					$query->tie_breaker(0.7)->boost(1.2);
 				}
 			],
 
@@ -47,6 +44,6 @@ JSON;
 
 	protected function makeInstance(array $args)
 	{
-		return new DisMaxQuery(...$args);
+		return new DisMaxQuery;
 	}
 }

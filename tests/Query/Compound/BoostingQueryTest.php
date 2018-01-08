@@ -11,14 +11,7 @@ class BoostingQueryTest extends TestCase
 		return [
 
 			[
-				[
-					.2
-				],
-				function (BoostingQuery $query) {
-					$query->positive->term("field1", "value1");
-					$query->negative->term("field2", "value2");
-
-					return <<<JSON
+				<<<JSON
 {
     "boosting": {
         "positive": {
@@ -34,8 +27,11 @@ class BoostingQueryTest extends TestCase
         "negative_boost": 0.2
     }
 }
-JSON;
-
+JSON
+				, [ .2 ],
+				function (BoostingQuery $query) {
+					$query->positive->term("field1", "value1");
+					$query->negative->term("field2", "value2");
 				}
 			],
 

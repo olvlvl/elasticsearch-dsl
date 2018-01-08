@@ -2,16 +2,16 @@
 
 namespace olvlvl\ElasticsearchDSL\Query\Term;
 
-class IdsQueryTest extends \olvlvl\ElasticsearchDSL\Query\TestCase
+use olvlvl\ElasticsearchDSL\Query\TestCase;
+
+class IdsQueryTest extends TestCase
 {
 	public function provideSerialization(): array
 	{
 		return [
 
 			[
-				[ [ "1", "4", "100" ] ],
-				function () {
-					return <<<JSON
+				<<<JSON
 {
     "ids": {
         "values": [
@@ -21,17 +21,12 @@ class IdsQueryTest extends \olvlvl\ElasticsearchDSL\Query\TestCase
         ]
     }
 }
-JSON;
-
-				}
+JSON
+				, [ [ "1", "4", "100" ] ]
 			],
 
 			[
-				[ [ "1", "4", "100" ] ],
-				function (IdsQuery $query) {
-					$query->type("my_type");
-
-					return <<<JSON
+				<<<JSON
 {
     "ids": {
         "values": [
@@ -42,8 +37,10 @@ JSON;
         "type": "my_type"
     }
 }
-JSON;
-
+JSON
+				, [ [ "1", "4", "100" ] ],
+				function (IdsQuery $query) {
+					$query->type("my_type");
 				}
 			],
 

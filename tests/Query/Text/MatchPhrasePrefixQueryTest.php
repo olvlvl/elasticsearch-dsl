@@ -11,12 +11,7 @@ class MatchPhrasePrefixQueryTest extends TestCase
 		return [
 
 			[
-				[
-					'message', "quick brown f"
-				],
-				function (MatchPhrasePrefixQuery $query) {
-					$query->max_expansions(10);
-					return <<<JSON
+				<<<JSON
 {
     "match_phrase_prefix": {
         "message": {
@@ -25,7 +20,11 @@ class MatchPhrasePrefixQueryTest extends TestCase
         }
     }
 }
-JSON;
+JSON
+				, [ 'message', "quick brown f" ],
+				function (MatchPhrasePrefixQuery $query) {
+					$query->max_expansions(10);
+					return ;
 				}
 			],
 

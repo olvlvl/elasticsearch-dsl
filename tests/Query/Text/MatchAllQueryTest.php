@@ -11,29 +11,25 @@ class MatchAllQueryTest extends TestCase
 		return [
 
 			[
-				[
-				],
-				function () {
-					return <<<JSON
+				<<<JSON
 {
     "match_all": {}
 }
-JSON;
-				}
+JSON
 			],
 
 			[
-				[
-				],
-				function (MatchAllQuery $query) {
-					$query->boost(1.5);
-					return <<<JSON
+				<<<JSON
 {
     "match_all": {
         "boost": 1.5
     }
 }
-JSON;
+JSON
+				, [],
+				function (MatchAllQuery $query) {
+					$query->boost(1.5);
+					return ;
 				}
 			],
 
@@ -42,6 +38,6 @@ JSON;
 
 	protected function makeInstance(array $args)
 	{
-		return new MatchAllQuery(...$args);
+		return new MatchAllQuery;
 	}
 }

@@ -2,36 +2,27 @@
 
 namespace olvlvl\ElasticsearchDSL\Query\Term;
 
-class TermQueryTest extends \olvlvl\ElasticsearchDSL\Query\TestCase
+use olvlvl\ElasticsearchDSL\Query\TestCase;
+
+class TermQueryTest extends TestCase
 {
 	public function provideSerialization(): array
 	{
 		return [
 
 			[
-				[
-					'user', 'Kimchy'
-				],
-				function (TermQuery $query) {
-					return <<<JSON
+				<<<JSON
 {
     "term": {
         "user": "Kimchy"
     }
 }
-JSON;
-				}
+JSON
+				, [ 'user', 'Kimchy' ]
 			],
 
 			[
-				[
-					'user', 'Kimchy'
-				],
-				function (TermQuery $query) {
-					$query
-						->boost(1.5);
-
-					return <<<JSON
+				<<<JSON
 {
     "term": {
         "user": {
@@ -40,7 +31,10 @@ JSON;
         }
     }
 }
-JSON;
+JSON
+				, [ 'user', 'Kimchy' ],
+				function (TermQuery $query) {
+					$query->boost(1.5);
 				}
 			],
 

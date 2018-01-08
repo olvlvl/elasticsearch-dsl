@@ -2,25 +2,23 @@
 
 namespace olvlvl\ElasticsearchDSL\Query\Term;
 
-class TypeQueryTest extends \olvlvl\ElasticsearchDSL\Query\TestCase
+use olvlvl\ElasticsearchDSL\Query\TestCase;
+
+class TypeQueryTest extends TestCase
 {
 	public function provideSerialization(): array
 	{
 		return [
 
 			[
-				[
-					'my_type'
-				],
-				function (TypeQuery $query) {
-					return <<<JSON
+				<<<JSON
 {
     "type": {
         "value": "my_type"
     }
 }
-JSON;
-				}
+JSON
+				, [ 'my_type' ]
 			],
 
 		];

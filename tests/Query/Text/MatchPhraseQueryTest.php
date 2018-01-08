@@ -11,12 +11,7 @@ class MatchPhraseQueryTest extends TestCase
 		return [
 
 			[
-				[
-					'message', "this is a test"
-				],
-				function (MatchPhraseQuery $query) {
-					$query->analyzer('my_analyzer');
-					return <<<JSON
+				<<<JSON
 {
     "match_phrase": {
         "message": {
@@ -25,7 +20,11 @@ class MatchPhraseQueryTest extends TestCase
         }
     }
 }
-JSON;
+JSON
+				, [ 'message', "this is a test" ],
+				function (MatchPhraseQuery $query) {
+					$query->analyzer('my_analyzer');
+					return ;
 				}
 			],
 

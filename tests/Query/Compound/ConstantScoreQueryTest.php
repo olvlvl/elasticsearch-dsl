@@ -11,13 +11,7 @@ class ConstantScoreQueryTest extends TestCase
 		return [
 
 			[
-				[
-					1.2
-				],
-				function (ConstantScoreQuery $query) {
-					$query->filter->term("user", "kimchy");
-
-					return <<<JSON
+				<<<JSON
 {
     "constant_score": {
         "filter": {
@@ -28,8 +22,10 @@ class ConstantScoreQueryTest extends TestCase
         "boost": 1.2
     }
 }
-JSON;
-
+JSON
+				, [ 1.2 ],
+				function (ConstantScoreQuery $query) {
+					$query->filter->term("user", "kimchy");
 				}
 			],
 

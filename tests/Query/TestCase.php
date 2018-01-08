@@ -7,13 +7,17 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 	/**
 	 * @dataProvider provideSerialization
 	 *
+	 * @param string $expected
 	 * @param array $args
-	 * @param callable $builder
+	 * @param callable|null $config
 	 */
-	public function testSerialization(array $args, callable $builder)
+	public function testSerialization(string $expected, array $args = [], callable $config = null)
 	{
 		$instance = $this->makeInstance($args);
-		$expected = $builder($instance);
+
+		if ($config) {
+			$config($instance);
+		}
 
 		$this->assertSame($expected, (string) $instance);
 	}

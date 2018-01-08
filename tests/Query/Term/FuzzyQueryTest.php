@@ -2,39 +2,27 @@
 
 namespace olvlvl\ElasticsearchDSL\Query\Term;
 
-class FuzzyQueryTest extends \olvlvl\ElasticsearchDSL\Query\TestCase
+use olvlvl\ElasticsearchDSL\Query\TestCase;
+
+class FuzzyQueryTest extends TestCase
 {
 	public function provideSerialization(): array
 	{
 		return [
 
 			[
-				[
-					'user', 'ki'
-				],
-				function (FuzzyQuery $query) {
-					return <<<JSON
+				<<<JSON
 {
     "fuzzy": {
         "user": "ki"
     }
 }
-JSON;
-				}
+JSON
+				, [ 'user', 'ki' ]
 			],
 
 			[
-				[
-					'user', 'ki'
-				],
-				function (FuzzyQuery $query) {
-					$query
-						->boost(1.5)
-						->fuzziness(2)
-						->prefix_length(0)
-						->max_expansions(100);
-
-					return <<<JSON
+				<<<JSON
 {
     "fuzzy": {
         "user": {
@@ -46,7 +34,14 @@ JSON;
         }
     }
 }
-JSON;
+JSON
+				, [ 'user', 'ki' ],
+				function (FuzzyQuery $query) {
+					$query
+						->boost(1.5)
+						->fuzziness(2)
+						->prefix_length(0)
+						->max_expansions(100);
 				}
 			],
 

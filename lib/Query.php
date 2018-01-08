@@ -18,6 +18,6 @@ class Query extends QueryCollection
 
 	public function to_array(): array
 	{
-		return json_decode(json_encode($this), true);
+		return $this->jsonSerialize();
 	}
 }

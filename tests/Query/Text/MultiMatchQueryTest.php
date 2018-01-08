@@ -11,11 +11,7 @@ class MultiMatchQueryTest extends TestCase
 		return [
 
 			[
-				[
-					[ 'subject', 'message' ], "this is a test"
-				],
-				function () {
-					return <<<JSON
+				<<<JSON
 {
     "multi_match": {
         "query": "this is a test",
@@ -25,8 +21,8 @@ class MultiMatchQueryTest extends TestCase
         ]
     }
 }
-JSON;
-				}
+JSON
+				, [ [ 'subject', 'message' ], "this is a test" ]
 			],
 
 		];

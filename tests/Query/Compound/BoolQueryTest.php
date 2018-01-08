@@ -12,19 +12,7 @@ class BoolQueryTest extends TestCase
 		return [
 
 			[
-				[], function (BoolQuery $query) {
-					$query->minimum_should_match(1)
-						->boost(1.5);
-					$query->must->term("user", "kimchy");
-					$query->filter->term("tag", "tech");
-					$query->must_not->range("age", function (RangeQuery $range) {
-						$range->gte(10)->lte(20);
-					});
-					$query->should
-						->term("tag", "wow")
-						->term("tag", "elasticsearch");
-
-					return <<<JSON
+				<<<JSON
 {
     "bool": {
         "must": {
@@ -61,17 +49,24 @@ class BoolQueryTest extends TestCase
         "boost": 1.5
     }
 }
-JSON;
-
+JSON
+				, [],
+				function (BoolQuery $query) {
+					$query->minimum_should_match(1)
+						->boost(1.5);
+					$query->must->term("user", "kimchy");
+					$query->filter->term("tag", "tech");
+					$query->must_not->range("age", function (RangeQuery $range) {
+						$range->gte(10)->lte(20);
+					});
+					$query->should
+						->term("tag", "wow")
+						->term("tag", "elasticsearch");
 				}
 			],
 
 			[
-				[], function (BoolQuery $query) {
-					$query->must
-						->term("preference_1", "Apples");
-
-					return <<<JSON
+				<<<JSON
 {
     "bool": {
         "must": {
@@ -81,16 +76,16 @@ JSON;
         }
     }
 }
-JSON;
+JSON
+				,[],
+				function (BoolQuery $query) {
+					$query->must
+						->term("preference_1", "Apples");
 				}
 			],
 
-			[ [], function (BoolQuery $query) {
-				$query->must
-					->term("preference_1", "Apples")
-					->term("preference_2", "Banana");
-
-				return <<<JSON
+			[
+				<<<JSON
 {
     "bool": {
         "must": [
@@ -107,16 +102,17 @@ JSON;
         ]
     }
 }
-JSON;
-			} ],
+JSON
+				, [],
+				function (BoolQuery $query) {
+					$query->must
+						->term("preference_1", "Apples")
+						->term("preference_2", "Banana");
+				}
+			],
 
-			[ [], function (BoolQuery $query) {
-				$query->must
-					->term("preference_1", "Apples")
-					->term("preference_2", "Banana")
-					->terms("preference_3", [ "One", "Two" ]);
-
-				return <<<JSON
+			[
+				<<<JSON
 {
     "bool": {
         "must": [
@@ -141,20 +137,18 @@ JSON;
         ]
     }
 }
-JSON;
-			} ],
+JSON
+				, [],
+				function (BoolQuery $query) {
+					$query->must
+						->term("preference_1", "Apples")
+						->term("preference_2", "Banana")
+						->terms("preference_3", [ "One", "Two" ]);
+				}
+			],
 
-			[ [], function (BoolQuery $query) {
-				$query->must
-					->term("preference_1", "Apples")
-					->term("preference_2", "Banana")
-					->terms("preference_3", [ "One", "Two" ]);
-				$query->filter
-					->term("preference_4", "Orange");
-				$query->should
-					->match("field_1", "Kiwi");
-
-				return <<<JSON
+			[
+				<<<JSON
 {
     "bool": {
         "must": [
@@ -189,16 +183,22 @@ JSON;
         }
     }
 }
-JSON;
-			} ],
+JSON
+				, [],
+				function (BoolQuery $query) {
+					$query->must
+						->term("preference_1", "Apples")
+						->term("preference_2", "Banana")
+						->terms("preference_3", [ "One", "Two" ]);
+					$query->filter
+						->term("preference_4", "Orange");
+					$query->should
+						->match("field_1", "Kiwi");
+				}
+			],
 
-			[ [], function (BoolQuery $query) {
-				$query->filter
-					->term("field_1", "one");
-				$query->must->bool->filter
-					->term("field_2", "two");
-
-				return <<<JSON
+			[
+				<<<JSON
 {
     "bool": {
         "must": {
@@ -217,14 +217,20 @@ JSON;
         }
     }
 }
-JSON;
-			} ],
+JSON
+				, [], function (BoolQuery $query) {
+					$query->filter
+						->term("field_1", "one");
+					$query->must->bool->filter
+						->term("field_2", "two");
+				}
+			],
 
 		];
 	}
 
 	protected function makeInstance(array $args)
 	{
-		return new BoolQuery(...$args);
+		return new BoolQuery;
 	}
 }

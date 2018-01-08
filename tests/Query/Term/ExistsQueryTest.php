@@ -2,24 +2,25 @@
 
 namespace olvlvl\ElasticsearchDSL\Query\Term;
 
-class ExistsQueryTest extends \olvlvl\ElasticsearchDSL\Query\TestCase
+use olvlvl\ElasticsearchDSL\Query\TestCase;
+
+class ExistsQueryTest extends TestCase
 {
 	public function provideSerialization(): array
 	{
 		return [
 
 			[
-				[
-					'user'
-				],
-				function (ExistsQuery $query) {
-					return <<<JSON
+				<<<JSON
 {
     "exists": {
         "field": "user"
     }
 }
-JSON;
+JSON
+				, [ 'user' ],
+				function (ExistsQuery $query) {
+					return ;
 				}
 			],
 

@@ -11,15 +11,7 @@ class FilterQueryTest extends TestCase
 		return [
 
 			[
-				[
-				],
-				function (FilterQuery $query) {
-					$query->term('field1', 'value1')
-						->term('field2', 'value2')
-						->terms('field3', [ 'value31','value32' ])
-						->terms('field4', [ 'value41','value42' ]);
-
-					return <<<JSON
+				<<<JSON
 {
     "filter": [
         {
@@ -50,7 +42,13 @@ class FilterQueryTest extends TestCase
         }
     ]
 }
-JSON;
+JSON
+				, [],
+				function (FilterQuery $query) {
+					$query->term('field1', 'value1')
+						->term('field2', 'value2')
+						->terms('field3', [ 'value31','value32' ])
+						->terms('field4', [ 'value41','value42' ]);
 				}
 			],
 
