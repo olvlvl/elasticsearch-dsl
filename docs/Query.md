@@ -66,9 +66,9 @@ $query->bool->must
     ->match('content', "Elasticsearch");
 $query->bool->filter
     ->term('status', 'published')
-    ->range('publish_date', [
-        Query\Term\RangeQuery::OPTION_GTE => "2015-01-01"
-    ]);
+    ->range('publish_date', function (Query\Term\RangeQuery $range) {
+    	$range->gte("2015-01-01");
+    });
 ```
 
 
@@ -168,6 +168,47 @@ $query->nested("menus")
     ->query->bool->filter
         ->term("menus.week", "2018-W03")
         ->term("menus.product", "express-box");
+```
+
+
+
+
+
+## A nested query within a bool query
+
+```json
+{
+    "query": {
+        "bool": {
+            "must": {
+                "nested": {
+                    "path": "menus",
+                    "query": {
+                        "bool": {
+                            "filter": [
+                                { "term": { "menus.product": "express-box" } },
+                                { "term": { "menus.week": "2018-W03" } }
+                            ]
+                        }
+                    }
+                }
+            },
+            "filter": { "term": { "tags.slug": "under-30-minutes" } }
+        }
+    }
+}
+```
+```php
+<?php
+
+use olvlvl\ElasticsearchDSL\Query;
+
+$query = new Query;
+$query->bool->filter
+    ->term('tags.slug', "under-30-minutes");
+$query->bool->must->nested("menus")->query->bool->filter
+    ->term("menus.product", "express-box")
+    ->term("menus.week", "2018-W03");
 ```
 
 

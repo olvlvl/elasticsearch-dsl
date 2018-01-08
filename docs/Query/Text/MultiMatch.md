@@ -20,8 +20,6 @@
 use olvlvl\ElasticsearchDSL\Query\Text\MultiMatchQuery;
 
 $query = (new MultiMatchQuery([ 'subject', 'message' ], "this is a test"));
-
-echo $query;
 ```
 
 [1]: https://www.elastic.co/guide/en/elasticsearch/reference/5.6/query-dsl-multi-match-query.html

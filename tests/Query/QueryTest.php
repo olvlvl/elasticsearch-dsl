@@ -20,7 +20,6 @@ class QueryTest extends QueryTestCase
     }
 }
 JSON;
-
 			} ],
 
 			[ function (Query $query) {
@@ -33,7 +32,6 @@ JSON;
     }
 }
 JSON;
-
 			} ],
 
 			[ function (Query $query) {
@@ -80,14 +78,13 @@ JSON;
     }
 }
 JSON;
-
 			} ],
 
 			[ function (Query $query) {
 				$query->bool->must
 					->match("preference_1", "Apples");
 
-				return <<<EOT
+				return <<<JSON
 {
     "query": {
         "bool": {
@@ -99,7 +96,7 @@ JSON;
         }
     }
 }
-EOT;
+JSON;
 			} ],
 
 			[ function (Query $query) {
@@ -107,7 +104,7 @@ EOT;
 					->match("preference_1", "Apples")
 					->match("preference_2", "Bananas");
 
-				return <<<EOT
+				return <<<JSON
 {
     "query": {
         "bool": {
@@ -126,14 +123,14 @@ EOT;
         }
     }
 }
-EOT;
+JSON;
 			} ],
 
 			[ function (Query $query) {
 				$query->bool->must_not
 					->match("preference_1", "Apples");
 
-				return <<<EOT
+				return <<<JSON
 {
     "query": {
         "bool": {
@@ -145,8 +142,7 @@ EOT;
         }
     }
 }
-EOT;
-
+JSON;
 			} ],
 
 			[ function (Query $query) {
@@ -154,7 +150,7 @@ EOT;
 					->match("preference_1", "Apples")
 					->match("preference_2", "Bananas");
 
-				return <<<EOT
+				return <<<JSON
 {
     "query": {
         "bool": {
@@ -173,7 +169,7 @@ EOT;
         }
     }
 }
-EOT;
+JSON;
 			} ],
 
 			[ function (Query $query) {
@@ -187,7 +183,7 @@ EOT;
 
 				$query->bool->should->match("preference_1", "Grapefruit");
 
-				return <<<EOT
+				return <<<JSON
 {
     "query": {
         "bool": {
@@ -233,8 +229,7 @@ EOT;
         }
     }
 }
-EOT;
-
+JSON;
 			} ],
 
 			[ function (Query $query) {
@@ -299,7 +294,6 @@ EOT;
     }
 }
 JSON;
-
 			} ],
 
 			[ function (Query $query) {
@@ -351,7 +345,6 @@ JSON;
     }
 }
 JSON;
-
 			} ],
 
 			[ function (Query $query) {
@@ -462,7 +455,49 @@ JSON;
     }
 }
 JSON;
+			} ],
 
+			[ function (Query $query) {
+				$query->bool->filter
+					->term('tags.slug', "under-30-minutes");
+				$query->bool->must->nested("menus")->query->bool->filter
+					->term("menus.product", "express-box")
+					->term("menus.week", "2018-W03");
+
+				return <<<JSON
+{
+    "query": {
+        "bool": {
+            "must": {
+                "nested": {
+                    "path": "menus",
+                    "query": {
+                        "bool": {
+                            "filter": [
+                                {
+                                    "term": {
+                                        "menus.product": "express-box"
+                                    }
+                                },
+                                {
+                                    "term": {
+                                        "menus.week": "2018-W03"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "filter": {
+                "term": {
+                    "tags.slug": "under-30-minutes"
+                }
+            }
+        }
+    }
+}
+JSON;
 			} ],
 
 		];

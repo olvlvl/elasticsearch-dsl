@@ -20,8 +20,6 @@ use olvlvl\ElasticsearchDSL\Query\Text\MatchPhrasePrefixQuery;
 
 $query = (new MatchPhrasePrefixQuery('message', "quick brown f"))
     ->max_expansions(10);
-
-echo $query;
 ```
 
 [1]: https://www.elastic.co/guide/en/elasticsearch/reference/5.6/query-dsl-match-query-phrase-prefix.html
