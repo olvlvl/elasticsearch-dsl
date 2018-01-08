@@ -42,9 +42,9 @@ JSON;
 					->match('content', "Elasticsearch");
 				$query->bool->filter
 					->term('status', 'published')
-					->range('publish_date', [
-						Query\Term\RangeQuery::OPTION_GTE => "2015-01-01"
-					]);
+					->range('publish_date', function (Query\Term\RangeQuery $range) {
+						$range->gte("2015-01-01");
+					});
 
 				return <<<JSON
 {

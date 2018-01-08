@@ -12,11 +12,15 @@ trait JoiningQueries
 	 */
 	private $nested = [];
 
-	public function nested(string $path, array $options = [])
+	public function nested(string $path, callable $config = null): NestedQuery
 	{
-		$this->nested[] = $nested = new NestedQuery($path, $options);
+		$this->nested[] = $q = new NestedQuery($path);
 
-		return $nested;
+		if ($config) {
+			$config($q);
+		}
+
+		return $q;
 	}
 
 	protected function jsonSerializeJoiningQueries(): array

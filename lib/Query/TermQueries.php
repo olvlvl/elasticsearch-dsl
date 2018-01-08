@@ -21,9 +21,13 @@ trait TermQueries
 	 */
 	private $term = [];
 
-	public function term(string $field, $value, array $options = [])
+	public function term(string $field, $value, callable $config = null)
 	{
-		$this->term[] = new TermQuery($field, $value, $options);
+		$this->term[] = $q = new TermQuery($field, $value);
+
+		if ($config) {
+			$config($q);
+		}
 
 		return $this;
 	}
@@ -33,9 +37,13 @@ trait TermQueries
 	 */
 	private $terms = [];
 
-	public function terms(string $field, array $values, array $options = [])
+	public function terms(string $field, array $values, callable $config = null)
 	{
-		$this->terms[] = new TermsQuery($field, $values, $options);
+		$this->terms[] = $q = new TermsQuery($field, $values);
+
+		if ($config) {
+			$config($q);
+		}
 
 		return $this;
 	}
@@ -45,14 +53,12 @@ trait TermQueries
 	 */
 	private $range = [];
 
-	public function range(string $field, $optionsOrConfigurator = null)
+	public function range(string $field, callable $config = null)
 	{
-		$options = is_array($optionsOrConfigurator) ? $optionsOrConfigurator : [];
+		$this->range[] = $q = new RangeQuery($field);
 
-		$this->range[] = $range = new RangeQuery($field, $options);
-
-		if (is_callable($optionsOrConfigurator)) {
-			$optionsOrConfigurator($range);
+		if ($config) {
+			$config($q);
 		}
 
 		return $this;
@@ -75,9 +81,13 @@ trait TermQueries
 	 */
 	private $prefix = [];
 
-	public function prefix(string $field, $value, array $options = [])
+	public function prefix(string $field, $value, callable $config = null)
 	{
-		$this->prefix[] = new PrefixQuery($field, $value, $options);
+		$this->prefix[] = $q = new PrefixQuery($field, $value);
+
+		if ($config) {
+			$config($q);
+		}
 
 		return $this;
 	}
@@ -87,9 +97,13 @@ trait TermQueries
 	 */
 	private $wildcard = [];
 
-	public function wildcard(string $field, $value, array $options = [])
+	public function wildcard(string $field, $value, callable $config = null)
 	{
-		$this->wildcard[] = new WildcardQuery($field, $value, $options);
+		$this->wildcard[] = $q = new WildcardQuery($field, $value);
+
+		if ($config) {
+			$config($q);
+		}
 
 		return $this;
 	}
@@ -99,9 +113,13 @@ trait TermQueries
 	 */
 	private $regexp = [];
 
-	public function regexp(string $field, $value, array $options = [])
+	public function regexp(string $field, $value, callable $config = null)
 	{
-		$this->regexp[] = new RegexpQuery($field, $value, $options);
+		$this->regexp[] = $q = new RegexpQuery($field, $value);
+
+		if ($config) {
+			$config($q);
+		}
 
 		return $this;
 	}
@@ -111,9 +129,13 @@ trait TermQueries
 	 */
 	private $fuzzy = [];
 
-	public function fuzzy(string $field, $value, array $options = [])
+	public function fuzzy(string $field, $value, callable $config = null)
 	{
-		$this->fuzzy[] = new FuzzyQuery($field, $value, $options);
+		$this->fuzzy[] = $q = new FuzzyQuery($field, $value);
+
+		if ($config) {
+			$config($q);
+		}
 
 		return $this;
 	}
@@ -135,9 +157,13 @@ trait TermQueries
 	 */
 	private $ids = [];
 
-	public function ids(array $ids, array $options = [])
+	public function ids(array $ids, callable $config = null)
 	{
-		$this->ids[] = new IdsQuery($ids, $options);
+		$this->ids[] = $q = new IdsQuery($ids);
+
+		if ($config) {
+			$config($q);
+		}
 
 		return $this;
 	}

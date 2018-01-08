@@ -7,28 +7,28 @@ interface HasTermQueries
 	/**
 	 * @param string $field
 	 * @param mixed $value
-	 * @param array $options
+	 * @param callable|null $config
 	 *
 	 * @return $this
 	 */
-	public function term(string $field, $value, array $options = []);
+	public function term(string $field, $value, callable $config = null);
 
 	/**
 	 * @param string $field
 	 * @param array $values
-	 * @param array $options
+	 * @param callable|null $config
 	 *
 	 * @return $this
 	 */
-	public function terms(string $field, array $values, array $options = []);
+	public function terms(string $field, array $values, callable $config = null);
 
 	/**
 	 * @param string $field
-	 * @param callable|array|null $optionsOrConfigurator
+	 * @param callable|null $config
 	 *
 	 * @return $this
 	 */
-	public function range(string $field, $optionsOrConfigurator = null);
+	public function range(string $field, callable $config = null);
 
 	/**
 	 * @param string $field
@@ -40,38 +40,38 @@ interface HasTermQueries
 	/**
 	 * @param string $field
 	 * @param mixed $value
-	 * @param array $options
+	 * @param callable|null $config
 	 *
 	 * @return $this
 	 */
-	public function prefix(string $field, $value, array $options = []);
+	public function prefix(string $field, $value, callable $config = null);
 
 	/**
 	 * @param string $field
 	 * @param mixed $value
-	 * @param array $options
+	 * @param callable|null $config
 	 *
 	 * @return $this
 	 */
-	public function wildcard(string $field, $value, array $options = []);
+	public function wildcard(string $field, $value, callable $config = null);
 
 	/**
 	 * @param string $field
 	 * @param mixed $value
-	 * @param array $options
+	 * @param callable|null $config
 	 *
 	 * @return $this
 	 */
-	public function regexp(string $field, $value, array $options = []);
+	public function regexp(string $field, $value, callable $config = null);
 
 	/**
 	 * @param string $field
 	 * @param mixed $value
-	 * @param array $options
+	 * @param callable|null $config
 	 *
 	 * @return $this
 	 */
-	public function fuzzy(string $field, $value, array $options = []);
+	public function fuzzy(string $field, $value, callable $config = null);
 
 	/**
 	 * @param string $type
@@ -82,9 +82,9 @@ interface HasTermQueries
 
 	/**
 	 * @param array $ids
-	 * @param array $options
+	 * @param callable|null $config
 	 *
 	 * @return $this
 	 */
-	public function ids(array $ids, array $options = []);
+	public function ids(array $ids, callable $config = null);
 }

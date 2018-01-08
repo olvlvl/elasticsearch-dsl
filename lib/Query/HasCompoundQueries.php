@@ -18,5 +18,5 @@ interface HasCompoundQueries
 	public function bool(): BoolQuery;
 	public function boosting(float $negative_boost = .5): BoostingQuery;
 	public function constant_score(float $score = 1.0): ConstantScoreQuery;
-	public function dis_max(array $options): DisMaxQuery;
+	public function dis_max(callable $config = null): DisMaxQuery;
 }

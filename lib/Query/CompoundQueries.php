@@ -79,11 +79,15 @@ trait CompoundQueries
 		return $query ? $query : $this->dis_max();
 	}
 
-	public function dis_max(array $options = []): DisMaxQuery
+	public function dis_max(callable $config = null): DisMaxQuery
 	{
-		$this->dis_max_queries[] = $query = new DisMaxQuery($options);
+		$this->dis_max_queries[] = $q = new DisMaxQuery;
 
-		return $query;
+		if ($config) {
+			$config($q);
+		}
+
+		return $q;
 	}
 
 	protected function jsonSerializeCompoundQueries(): array

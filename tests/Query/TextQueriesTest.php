@@ -41,18 +41,24 @@ class TextQueriesTest extends TestCase
 
 			[ function (HasTextQueries $query) {
 
-				$query->match($field1 = uniqid(), $query1 = uniqid())
-					->match($field2 = uniqid(), $query2 = uniqid(), $options = [
-						MatchQuery::OPTION_OPERATOR => 'and',
-						MatchQuery::OPTION_ZERO_TERMS_QUERY => 'all',
-						MatchQuery::OPTION_CUTOFF_FREQUENCY => .5,
-						MatchQuery::OPTION_FUZZINESS => 'AUTO',
-					]);
+				$query->match('field1', 'query1')
+					->match('field2', 'query2', function(MatchQuery $match) {
+						$match
+							->operator('and')
+							->zero_terms_query('all')
+							->cutoff_frequency(.5)
+							->fuzziness('AUTO');
+					});
 
 				return [
 
-					[ 'match' => [ $field1 => $query1 ] ],
-					[ 'match' => [ $field2 => [ 'query' => $query2 ] + $options ] ],
+					[ 'match' => [ 'field1' => 'query1' ] ],
+					[ 'match' => [ 'field2' => [ 'query' => 'query2' ] + [
+						'operator' => 'and',
+						'zero_terms_query' => 'all',
+						'cutoff_frequency' => .5,
+						'fuzziness' => 'AUTO',
+					] ] ],
 
 				];
 
@@ -72,15 +78,18 @@ class TextQueriesTest extends TestCase
 
 			[ function (HasTextQueries $query) {
 
-				$query->match_phrase($field1 = uniqid(), $query1 = uniqid())
-					->match_phrase($field2 = uniqid(), $query2 = uniqid(), $options = [
-						MatchPhraseQuery::OPTION_ANALYZER => uniqid(),
-					]);
+				$query->match_phrase('field1', 'query1')
+					->match_phrase('field2', 'query2', function (MatchPhraseQuery $match_phrase) {
+						$match_phrase->analyzer('my_analyser');
+					});
 
 				return [
 
-					[ 'match_phrase' => [ $field1 => $query1 ] ],
-					[ 'match_phrase' => [ $field2 => [ 'query' => $query2 ] + $options ] ],
+					[ 'match_phrase' => [ 'field1' => 'query1' ] ],
+					[ 'match_phrase' => [ 'field2' => [
+						'query' => 'query2',
+						'analyzer' => 'my_analyser',
+					] ] ],
 
 				];
 
@@ -100,16 +109,24 @@ class TextQueriesTest extends TestCase
 
 			[ function (HasTextQueries $query) {
 
-				$query->match_phrase_prefix($field1 = uniqid(), $query1 = uniqid())
-					->match_phrase_prefix($field2 = uniqid(), $query2 = uniqid(), $options = [
-						MatchPhrasePrefixQuery::OPTION_ANALYZER => uniqid(),
-						MatchPhrasePrefixQuery::OPTION_MAX_EXPANSIONS => mt_rand(10, 20),
-					]);
+				$query->match_phrase_prefix('field1', 'query1')
+					->match_phrase_prefix(
+						'field2',
+						'query2',
+						function (MatchPhrasePrefixQuery $query) {
+							$query
+								->analyzer('my_analyser')
+								->max_expansions(10);
+						}
+					);
 
 				return [
 
-					[ 'match_phrase_prefix' => [ $field1 => $query1 ] ],
-					[ 'match_phrase_prefix' => [ $field2 => [ 'query' => $query2 ] + $options ] ],
+					[ 'match_phrase_prefix' => [ 'field1' => 'query1' ] ],
+					[ 'match_phrase_prefix' => [ 'field2' => [ 'query' => 'query2',
+						'analyzer' => 'my_analyser',
+						'max_expansions' => 10,
+					] ] ],
 
 				];
 
@@ -117,11 +134,11 @@ class TextQueriesTest extends TestCase
 
 			[ function (HasTextQueries $query) {
 
-				$query->multi_match($fields1 = [ uniqid(), uniqid() ], $query1 = uniqid());
+				$query->multi_match([ 'fields1', 'fields2' ], 'query1');
 
 				return [
 
-					[ 'multi_match' => [ 'query' => $query1, 'fields' => $fields1 ] ],
+					[ 'multi_match' => [ 'query' => 'query1', 'fields' => [ 'fields1', 'fields2' ] ] ],
 
 				];
 
@@ -129,17 +146,28 @@ class TextQueriesTest extends TestCase
 
 			[ function (HasTextQueries $query) {
 
-				$query->multi_match($fields1 = [ uniqid(), uniqid() ], $query1 = uniqid())
-					->multi_match($fields2 = [ uniqid(), uniqid() ], $query2 = uniqid(), $options = [
-						MultiMatchQuery::OPTION_OPERATOR => 'and',
-						MultiMatchQuery::OPTION_TYPE => 'best_fields',
-						MultiMatchQuery::OPTION_TIE_BREAKER => .3,
-					]);
+				$query->multi_match([ 'fields1', 'fields2' ], 'query1')
+					->multi_match(
+						[ 'fields3', 'fields4' ],
+						'query2',
+						function (MultiMatchQuery $q) {
+							$q
+								->operator('and')
+								->type('best_fields')
+								->tie_breaker(.3);
+						}
+					);
 
 				return [
 
-					[ 'multi_match' => [ 'query' => $query1, 'fields' => $fields1 ] ],
-					[ 'multi_match' => [ 'query' => $query2, 'fields' => $fields2 ] + $options ],
+					[ 'multi_match' => [ 'query' => 'query1', 'fields' => [ 'fields1', 'fields2' ] ] ],
+					[ 'multi_match' => [
+						'query' => 'query2',
+						'fields' => [ 'fields3', 'fields4' ],
+						'operator' => 'and',
+						'type' => 'best_fields',
+						'tie_breaker' => .3
+					] ],
 
 				];
 

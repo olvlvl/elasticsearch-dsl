@@ -5,11 +5,11 @@ namespace olvlvl\ElasticsearchDSL\Query;
 interface HasTextQueries
 {
 	/**
-	 * @param array $options
+	 * @param callable|null $config
 	 *
 	 * @return $this
 	 */
-	public function match_all(array $options = []);
+	public function match_all(callable $config = null);
 
 	/**
 	 * @return $this
@@ -19,36 +19,36 @@ interface HasTextQueries
 	/**
 	 * @param string $field
 	 * @param string $query
-	 * @param array $options
+	 * @param callable|null $config
 	 *
 	 * @return $this
 	 */
-	public function match(string $field, string $query, array $options = []);
+	public function match(string $field, string $query, callable $config = null);
 
 	/**
 	 * @param string $field
 	 * @param string $query
-	 * @param array $options
+	 * @param callable|null $config
 	 *
 	 * @return $this
 	 */
-	public function match_phrase(string $field, string $query, array $options = []);
+	public function match_phrase(string $field, string $query, callable $config = null);
 
 	/**
 	 * @param string $field
 	 * @param string $query
-	 * @param array $options
+	 * @param callable|null $config
 	 *
 	 * @return $this
 	 */
-	public function match_phrase_prefix(string $field, string $query, array $options = []);
+	public function match_phrase_prefix(string $field, string $query, callable $config = null);
 
 	/**
 	 * @param array $fields
 	 * @param string $query
-	 * @param array $options
+	 * @param callable|null $config
 	 *
 	 * @return $this
 	 */
-	public function multi_match(array $fields, string $query, array $options = []);
+	public function multi_match(array $fields, string $query, callable $config = null);
 }

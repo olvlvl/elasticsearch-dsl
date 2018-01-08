@@ -17,9 +17,13 @@ trait TextQueries
 	 */
 	private $match_all = [];
 
-	public function match_all(array $options = [])
+	public function match_all(callable $config = null)
 	{
-		$this->match_all[] = new MatchAllQuery($options);
+		$this->match_all[] = $q = new MatchAllQuery();
+
+		if ($config) {
+			$config($q);
+		}
 
 		return $this;
 	}
@@ -41,9 +45,13 @@ trait TextQueries
 	 */
 	private $match = [];
 
-	public function match(string $field, string $query, array $options = [])
+	public function match(string $field, string $query, callable $config = null)
 	{
-		$this->match[] = new MatchQuery($field, $query, $options);
+		$this->match[] = $q = new MatchQuery($field, $query);
+
+		if ($config) {
+			$config($q);
+		}
 
 		return $this;
 	}
@@ -53,9 +61,13 @@ trait TextQueries
 	 */
 	private $match_phrase = [];
 
-	public function match_phrase(string $field, string $query, array $options = [])
+	public function match_phrase(string $field, string $query, callable $config = null)
 	{
-		$this->match_phrase[] = new MatchPhraseQuery($field, $query, $options);
+		$this->match_phrase[] = $q = new MatchPhraseQuery($field, $query);
+
+		if ($config) {
+			$config($q);
+		}
 
 		return $this;
 	}
@@ -65,9 +77,13 @@ trait TextQueries
 	 */
 	private $match_phrase_prefix = [];
 
-	public function match_phrase_prefix(string $field, string $query, array $options = [])
+	public function match_phrase_prefix(string $field, string $query, callable $config = null)
 	{
-		$this->match_phrase_prefix[] = new MatchPhrasePrefixQuery($field, $query, $options);
+		$this->match_phrase_prefix[] = $q = new MatchPhrasePrefixQuery($field, $query);
+
+		if ($config) {
+			$config($q);
+		}
 
 		return $this;
 	}
@@ -77,9 +93,13 @@ trait TextQueries
 	 */
 	private $multi_match = [];
 
-	public function multi_match(array $fields, string $query, array $options = [])
+	public function multi_match(array $fields, string $query, callable $config = null)
 	{
-		$this->multi_match[] = new MultiMatchQuery($fields, $query, $options);
+		$this->multi_match[] = $q = new MultiMatchQuery($fields, $query);
+
+		if ($config) {
+			$config($q);
+		}
 
 		return $this;
 	}

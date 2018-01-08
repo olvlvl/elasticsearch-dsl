@@ -42,13 +42,13 @@ class TermQueriesTest extends TestCase
 
 			[ function (HasTermQueries $query) {
 
-				$query->term($field1 = uniqid(), $value1 = uniqid())
-					->term($field2 = uniqid(), $value2 = uniqid());
+				$query->term('field1', 'value1')
+					->term('field2', 'value2');
 
 				return  [
 
-					[ 'term' => [ $field1 => $value1 ] ],
-					[ 'term' => [ $field2 => $value2 ] ],
+					[ 'term' => [ 'field1' => 'value1' ] ],
+					[ 'term' => [ 'field2' => 'value2' ] ],
 
 				];
 
@@ -68,13 +68,13 @@ class TermQueriesTest extends TestCase
 
 			[ function (HasTermQueries $query) {
 
-				$query->terms($field1 = uniqid(), $values1 = [ uniqid(), uniqid() ])
-					->terms($field2 = uniqid(), $values2 = [ uniqid(), uniqid() ]);
+				$query->terms('field1', $values1 = [ uniqid(), uniqid() ])
+					->terms('field2', $values2 = [ uniqid(), uniqid() ]);
 
 				return  [
 
-					[ 'terms' => [ $field1 => $values1 ] ],
-					[ 'terms' => [ $field2 => $values2 ] ],
+					[ 'terms' => [ 'field1' => $values1 ] ],
+					[ 'terms' => [ 'field2' => $values2 ] ],
 
 				];
 
@@ -94,13 +94,13 @@ class TermQueriesTest extends TestCase
 
 			[ function (HasTermQueries $query) {
 
-				$query->exists($field1 = uniqid())
-					->exists($field2 = uniqid());
+				$query->exists('field1')
+					->exists('field2');
 
 				return  [
 
-					[ 'exists' => [ 'field' => $field1 ] ],
-					[ 'exists' => [ 'field' => $field2 ] ],
+					[ 'exists' => [ 'field' => 'field1' ] ],
+					[ 'exists' => [ 'field' => 'field2' ] ],
 
 				];
 
@@ -120,15 +120,15 @@ class TermQueriesTest extends TestCase
 
 			[ function (HasTermQueries $query) {
 
-				$query->prefix($field1 = uniqid(), $value1 = uniqid())
-					->prefix($field2 = uniqid(), $value2 = uniqid(), $options = [
-						PrefixQuery::OPTION_BOOST => mt_rand(10, 20) + .5
-					]);
+				$query->prefix('field1', 'value1')
+					->prefix('field2', 'value2', function (PrefixQuery $query) {
+						$query->boost(1.5);
+					});
 
 				return  [
 
-					[ 'prefix' => [ $field1 => $value1 ] ],
-					[ 'prefix' => [ $field2 => [ 'value' => $value2 ] + $options ] ],
+					[ 'prefix' => [ 'field1' => 'value1' ] ],
+					[ 'prefix' => [ 'field2' => [ 'value' => 'value2', 'boost' => 1.5 ] ] ],
 
 				];
 
@@ -148,15 +148,15 @@ class TermQueriesTest extends TestCase
 
 			[ function (HasTermQueries $query) {
 
-				$query->wildcard($field1 = uniqid(), $value1 = uniqid())
-					->wildcard($field2 = uniqid(), $value2 = uniqid(), $options = [
-						WildcardQuery::OPTION_BOOST => $boost = mt_rand(10, 20) + .5
-					]);
+				$query->wildcard('field1', 'value1')
+					->wildcard('field2', 'value2', function (WildcardQuery $query) {
+						$query->boost(1.5);
+					});
 
 				return  [
 
-					[ 'wildcard' => [ $field1 => $value1 ] ],
-					[ 'wildcard' => [ $field2 => [ 'value' => $value2 ] + $options ] ],
+					[ 'wildcard' => [ 'field1' => 'value1' ] ],
+					[ 'wildcard' => [ 'field2' => [ 'value' => 'value2', 'boost' => 1.5 ] ] ],
 
 				];
 
@@ -176,17 +176,23 @@ class TermQueriesTest extends TestCase
 
 			[ function (HasTermQueries $query) {
 
-				$query->regexp($field1 = uniqid(), $value1 = uniqid())
-					->regexp($field2 = uniqid(), $value2 = uniqid(), $options = [
-						RegexpQuery::OPTION_BOOST => mt_rand(10, 20) + .5,
-						RegexpQuery::OPTION_FLAGS => uniqid(),
-						RegexpQuery::OPTION_MAX_DETERMINIZED_STATES => mt_rand(100, 200)
-					]);
+				$query->regexp('field1', 'value1')
+					->regexp('field2', 'value2', function (RegexpQuery $query) {
+						$query
+							->boost(1.2)
+							->flags('my_flags')
+							->max_determinized_states(32);
+					});
 
 				return  [
 
-					[ 'regexp' => [ $field1 => $value1 ] ],
-					[ 'regexp' => [ $field2 => [ 'value' => $value2 ] + $options ] ],
+					[ 'regexp' => [ 'field1' => 'value1' ] ],
+					[ 'regexp' => [ 'field2' => [
+						'value' => 'value2',
+						'boost' => 1.2,
+						'flags' => 'my_flags',
+						'max_determinized_states' => 32,
+					] ] ],
 
 				];
 
@@ -206,18 +212,25 @@ class TermQueriesTest extends TestCase
 
 			[ function (HasTermQueries $query) {
 
-				$query->fuzzy($field1 = uniqid(), $value1 = uniqid())
-					->fuzzy($field2 = uniqid(), $value2 = uniqid(), $options = [
-						FuzzyQuery::OPTION_BOOST => mt_rand(10, 20) + .5,
-						FuzzyQuery::OPTION_FUZZINESS => mt_rand(10, 20),
-						FuzzyQuery::OPTION_PREFIX_LENGTH => mt_rand(20, 30),
-						FuzzyQuery::OPTION_MAX_EXPANSIONS => mt_rand(30, 40),
-					]);
+				$query->fuzzy('field1', 'value1')
+					->fuzzy('field2', 'value2', function (FuzzyQuery $query) {
+						$query
+							->boost(1.7)
+							->fuzziness(12)
+							->prefix_length(3)
+							->max_expansions(32);
+					});
 
 				return  [
 
-					[ 'fuzzy' => [ $field1 => $value1 ] ],
-					[ 'fuzzy' => [ $field2 => [ 'value' => $value2 ] + $options ] ],
+					[ 'fuzzy' => [ 'field1' => 'value1' ] ],
+					[ 'fuzzy' => [ 'field2' => [
+						'value' => 'value2',
+						'boost' => 1.7,
+						'fuzziness' => 12,
+						'prefix_length' => 3,
+						'max_expansions' => 32
+					] ] ],
 
 				];
 
@@ -264,14 +277,14 @@ class TermQueriesTest extends TestCase
 			[ function (HasTermQueries $query) {
 
 				$query->ids($ids1 = [ uniqid(), uniqid() ])
-					->ids($ids2 = [ uniqid(), uniqid() ], $options = [
-						IdsQuery::OPTION_TYPE => uniqid(),
-					]);
+					->ids($ids2 = [ uniqid(), uniqid() ], function (IdsQuery $query) {
+						$query->type('my_type');
+					});
 
 				return  [
 
 					[ 'ids' => [ 'values' => $ids1 ] ],
-					[ 'ids' => [ 'values' => $ids2 ] + $options ],
+					[ 'ids' => [ 'values' => $ids2, 'type' => 'my_type' ] ],
 
 				];
 
