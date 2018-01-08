@@ -2,7 +2,17 @@
 
 namespace olvlvl\ElasticsearchDSL\Query\Compound\BoolQuery;
 
-class MustQuery extends BoolClause
+use olvlvl\ElasticsearchDSL\Query\QueryCollection;
+
+class MustQuery extends QueryCollection
 {
 	const NAME = 'must';
+
+	/**
+	 * @inheritdoc
+	 */
+	public function jsonSerialize()
+	{
+		return [ self::NAME => parent::jsonSerialize() ];
+	}
 }

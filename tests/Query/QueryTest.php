@@ -193,40 +193,40 @@ EOT;
         "bool": {
             "should": [
                 {
-                    "bool": {
-                        "must": [
-                            {
-                                "match": {
-                                    "preference_1": "Apples"
-                                }
-                            },
-                            {
-                                "match": {
-                                    "preference_2": "Bananas"
-                                }
-                            }
-                        ]
-                    }
-                },
-                {
-                    "bool": {
-                        "must": [
-                            {
-                                "match": {
-                                    "preference_1": "Apples"
-                                }
-                            },
-                            {
-                                "match": {
-                                    "preference_2": "Bananas"
-                                }
-                            }
-                        ]
-                    }
-                },
-                {
                     "match": {
                         "preference_1": "Grapefruit"
+                    }
+                },
+                {
+                    "bool": {
+                        "must": [
+                            {
+                                "match": {
+                                    "preference_1": "Apples"
+                                }
+                            },
+                            {
+                                "match": {
+                                    "preference_2": "Bananas"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "bool": {
+                        "must": [
+                            {
+                                "match": {
+                                    "preference_1": "Apples"
+                                }
+                            },
+                            {
+                                "match": {
+                                    "preference_2": "Bananas"
+                                }
+                            }
+                        ]
                     }
                 }
             ]
@@ -258,6 +258,11 @@ EOT;
             },
             "should": [
                 {
+                    "match": {
+                        "preference_1": "Grapefruit"
+                    }
+                },
+                {
                     "bool": {
                         "must": [
                             {
@@ -287,11 +292,6 @@ EOT;
                                 }
                             }
                         ]
-                    }
-                },
-                {
-                    "match": {
-                        "preference_1": "Grapefruit"
                     }
                 }
             ]

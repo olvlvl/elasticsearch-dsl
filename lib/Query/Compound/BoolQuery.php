@@ -103,13 +103,13 @@ class BoolQuery extends QueryAbstract implements HasBoostOption
 	 */
 	public function jsonSerialize()
 	{
-		return [ static::NAME => array_filter([
+		return [ static::NAME => array_filter(
 
-			MustQuery::NAME => $this->must->jsonSerialize(),
-			FilterQuery::NAME => $this->filter->jsonSerialize(),
-			ShouldQuery::NAME => $this->should->jsonSerialize(),
-			MustNotQuery::NAME => $this->must_not->jsonSerialize(),
+			$this->must->jsonSerialize() +
+			$this->filter->jsonSerialize() +
+			$this->should->jsonSerialize() +
+			$this->must_not->jsonSerialize()
 
-		]) + parent::jsonSerialize() ];
+		) + parent::jsonSerialize() ];
 	}
 }

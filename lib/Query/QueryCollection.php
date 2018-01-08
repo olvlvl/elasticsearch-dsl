@@ -2,6 +2,7 @@
 
 namespace olvlvl\ElasticsearchDSL\Query;
 
+use ICanBoogie\Accessor\AccessorTrait;
 use olvlvl\ElasticsearchDSL\Helpers;
 
 class QueryCollection implements
@@ -11,6 +12,7 @@ class QueryCollection implements
 	HasJoiningQueries,
 	\JsonSerializable
 {
+	use AccessorTrait;
 	use TextQueries;
 	use TermQueries;
 	use CompoundQueries;

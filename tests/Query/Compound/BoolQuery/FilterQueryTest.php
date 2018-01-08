@@ -2,26 +2,63 @@
 
 namespace olvlvl\ElasticsearchDSL\Query\Compound\BoolQuery;
 
-use PHPUnit\Framework\TestCase;
+use olvlvl\ElasticsearchDSL\Query\TestCase;
 
 class FilterQueryTest extends TestCase
 {
-	public function testOne90()
+	public function provideSerialization(): array
 	{
-		$filter = (new FilterQuery)
-			->term($field1 = uniqid(), $value1 = uniqid())
-			->term($field2 = uniqid(), $value2 = uniqid())
-			->terms($field3 = uniqid(), $value3 = [ uniqid(), uniqid() ])
-			->terms($field4 = uniqid(), $value4 = [ uniqid(), uniqid() ])
-		;
+		return [
 
-		$this->assertSame([
+			[
+				[
+				],
+				function (FilterQuery $query) {
+					$query->term('field1', 'value1')
+						->term('field2', 'value2')
+						->terms('field3', [ 'value31','value32' ])
+						->terms('field4', [ 'value41','value42' ]);
 
-			[ 'term' => [ $field1 => $value1 ] ],
-			[ 'term' => [ $field2 => $value2 ] ],
-			[ 'terms' => [ $field3 => $value3 ] ],
-			[ 'terms' => [ $field4 => $value4 ] ],
+					return <<<JSON
+{
+    "filter": [
+        {
+            "term": {
+                "field1": "value1"
+            }
+        },
+        {
+            "term": {
+                "field2": "value2"
+            }
+        },
+        {
+            "terms": {
+                "field3": [
+                    "value31",
+                    "value32"
+                ]
+            }
+        },
+        {
+            "terms": {
+                "field4": [
+                    "value41",
+                    "value42"
+                ]
+            }
+        }
+    ]
+}
+JSON;
+				}
+			],
 
-		], json_decode(json_encode($filter), true));
+		];
+	}
+
+	protected function makeInstance(array $args)
+	{
+		return new FilterQuery;
 	}
 }
