@@ -9,8 +9,6 @@ abstract class QueryAbstract implements \JsonSerializable
 {
 	use AccessorTrait;
 
-	protected const OPTIONS = [];
-
 	protected $options = [];
 
 	/**

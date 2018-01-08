@@ -23,16 +23,6 @@ class TermsQuery extends QueryAbstract
 	const OPTION_PATH = 'path';
 	const OPTION_ROUTING = 'routing';
 
-	protected const OPTIONS = [
-
-		self::OPTION_INDEX,
-		self::OPTION_TYPE,
-		self::OPTION_ID,
-		self::OPTION_PATH,
-		self::OPTION_ROUTING,
-
-	];
-
 	/**
 	 * @var string
 	 */

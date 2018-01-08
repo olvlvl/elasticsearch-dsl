@@ -22,11 +22,6 @@ class FuzzyQuery extends QueryAbstract implements HasFuzzyOptions, HasBoostOptio
 
 	const NAME = 'fuzzy';
 
-	protected const OPTIONS = self::FUZZY_OPTIONS + [
-
-		self::OPTION_BOOST,
-
-	];
 
 	/**
 	 * @var string

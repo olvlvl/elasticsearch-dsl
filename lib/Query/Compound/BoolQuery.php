@@ -28,13 +28,6 @@ class BoolQuery extends QueryAbstract implements HasBoostOption
 
 	const OPTION_MINIMUM_SHOULD_MATCH = 'minimum_should_match';
 
-	protected const OPTIONS = [
-
-		self::OPTION_MINIMUM_SHOULD_MATCH,
-		self::OPTION_BOOST,
-
-	];
-
 	/**
 	 * @var MustQuery
 	 */

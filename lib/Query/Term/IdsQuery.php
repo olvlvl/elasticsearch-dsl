@@ -13,12 +13,6 @@ class IdsQuery extends QueryAbstract
 
 	const OPTION_TYPE = 'type';
 
-	protected const OPTIONS = [
-
-		self::OPTION_TYPE,
-
-	];
-
 	/**
 	 * @var array
 	 */

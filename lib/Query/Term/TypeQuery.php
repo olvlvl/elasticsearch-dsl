@@ -8,10 +8,6 @@ class TypeQuery extends QueryAbstract
 {
 	const NAME = 'type';
 
-	protected const OPTIONS = [
-
-	];
-
 	/**
 	 * @var string
 	 */

@@ -14,8 +14,6 @@ class MatchQuery extends QueryAbstract implements HasMatchOptions
 
 	const NAME = 'match';
 
-	const OPTIONS = self::MATCH_OPTIONS;
-
 	/**
 	 * @var string
 	 */

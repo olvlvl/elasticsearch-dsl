@@ -10,14 +10,7 @@ class MatchPhraseQuery extends QueryAbstract
 	use JsonSerializeAsSimpleOrExtended;
 
 	const NAME = 'match_phrase';
-
 	const OPTION_ANALYZER = 'analyzer';
-
-	protected const OPTIONS = [
-
-		self::OPTION_ANALYZER
-
-	];
 
 	/**
 	 * @var string

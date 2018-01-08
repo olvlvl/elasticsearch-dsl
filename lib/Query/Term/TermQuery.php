@@ -19,12 +19,6 @@ class TermQuery extends QueryAbstract implements HasBoostOption
 
 	const NAME = 'term';
 
-	protected const OPTIONS = [
-
-		self::OPTION_BOOST
-
-	];
-
 	/**
 	 * @var string
 	 */

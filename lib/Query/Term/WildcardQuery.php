@@ -19,12 +19,6 @@ class WildcardQuery extends QueryAbstract implements HasBoostOption
 
 	const NAME = 'wildcard';
 
-	protected const OPTIONS = [
-
-		self::OPTION_BOOST,
-
-	];
-
 	/**
 	 * @var string
 	 */

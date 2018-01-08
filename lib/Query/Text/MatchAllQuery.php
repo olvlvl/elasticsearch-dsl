@@ -12,12 +12,6 @@ class MatchAllQuery extends QueryAbstract implements HasBoostOption
 
 	const NAME = 'match_all';
 
-	const OPTIONS = [
-
-		self::OPTION_BOOST,
-
-	];
-
 	/**
 	 * @inheritdoc
 	 */

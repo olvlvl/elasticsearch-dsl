@@ -28,18 +28,6 @@ class RangeQuery extends QueryAbstract implements HasBoostOption
 	const OPTION_LT = 'lt';
 	const OPTION_FORMAT = 'format';
 
-	protected const OPTIONS = [
-
-		self::OPTION_FROM,
-		self::OPTION_TO,
-		self::OPTION_GTE,
-		self::OPTION_GT,
-		self::OPTION_LTE,
-		self::OPTION_LT,
-		self::OPTION_FORMAT,
-		self::OPTION_BOOST,
-
-	];
 	/**
 	 * @var string
 	 */

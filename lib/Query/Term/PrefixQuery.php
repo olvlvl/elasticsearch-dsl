@@ -19,12 +19,6 @@ class PrefixQuery extends QueryAbstract implements HasBoostOption
 
 	const NAME = 'prefix';
 
-	protected const OPTIONS = [
-
-		self::OPTION_BOOST,
-
-	];
-
 	/**
 	 * @var string
 	 */

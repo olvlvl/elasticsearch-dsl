@@ -25,14 +25,6 @@ class RegexpQuery extends QueryAbstract implements HasBoostOption
 	const OPTION_FLAGS = 'flags';
 	const OPTION_MAX_DETERMINIZED_STATES = 'max_determinized_states';
 
-	protected const OPTIONS = [
-
-		self::OPTION_BOOST,
-		self::OPTION_FLAGS,
-		self::OPTION_MAX_DETERMINIZED_STATES,
-
-	];
-
 	/**
 	 * @var string
 	 */

@@ -8,10 +8,6 @@ class ExistsQuery extends QueryAbstract
 {
 	const NAME = 'exists';
 
-	protected const OPTIONS = [
-
-	];
-
 	/**
 	 * @var string
 	 */

@@ -8,9 +8,6 @@ class MatchNoneQuery extends QueryAbstract
 {
 	const NAME = 'match_none';
 
-	const OPTIONS = [
-	];
-
 	/**
 	 * @inheritdoc
 	 */
