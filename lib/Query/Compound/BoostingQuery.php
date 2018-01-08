@@ -2,35 +2,35 @@
 
 namespace olvlvl\ElasticsearchDSL\Query\Compound;
 
-use olvlvl\ElasticsearchDSL\Query\Compound\BoolQuery\FilterQuery;
 use olvlvl\ElasticsearchDSL\Query\QueryAbstract;
+use olvlvl\ElasticsearchDSL\Query\QueryCollection;
 
 /**
- * @property-read FilterQuery $positive
- * @property-read FilterQuery $negative
+ * @property-read QueryCollection $positive
+ * @property-read QueryCollection $negative
  */
 class BoostingQuery extends QueryAbstract
 {
 	const NAME = 'boosting';
 
 	/**
-	 * @var FilterQuery
+	 * @var QueryCollection
 	 */
 	private $positive;
 
-	protected function get_positive(): FilterQuery
+	protected function get_positive(): QueryCollection
 	{
-		return $this->positive ?: $this->positive = new FilterQuery;
+		return $this->positive ?: $this->positive = new QueryCollection;
 	}
 
 	/**
-	 * @var FilterQuery
+	 * @var QueryCollection
 	 */
 	private $negative;
 
-	protected function get_negative(): FilterQuery
+	protected function get_negative(): QueryCollection
 	{
-		return $this->negative ?: $this->negative = new FilterQuery;
+		return $this->negative ?: $this->negative = new QueryCollection;
 	}
 
 	/**
