@@ -2,9 +2,6 @@
 
 namespace olvlvl\ElasticsearchDSL\Query\Option;
 
-/**
- * @property float|null $boost
- */
 interface HasBoostOption
 {
 	const OPTION_BOOST = 'boost';
