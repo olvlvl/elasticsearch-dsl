@@ -25,8 +25,7 @@ class BoolQuery extends QueryAbstract implements HasBoostOption
 	use BoostOption;
 
 	const NAME = 'bool';
-
-	const OPTION_MINIMUM_SHOULD_MATCH = 'minimum_should_match';
+	private const OPTION_MINIMUM_SHOULD_MATCH = 'minimum_should_match';
 
 	/**
 	 * @var MustQuery

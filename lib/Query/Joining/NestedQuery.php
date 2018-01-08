@@ -17,8 +17,8 @@ class NestedQuery extends QueryAbstract
 
 	const NAME = 'nested';
 
-	const OPTION_SCORE_MODE = 'score_mode';
-	const OPTION_IGNORE_UNMAPPED = 'ignore_unmapped';
+	private const OPTION_SCORE_MODE = 'score_mode';
+	private const OPTION_IGNORE_UNMAPPED = 'ignore_unmapped';
 
 	/**
 	 * @var string

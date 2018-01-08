@@ -11,7 +11,7 @@ class IdsQuery extends QueryAbstract
 {
 	const NAME = 'ids';
 
-	const OPTION_TYPE = 'type';
+	private const OPTION_TYPE = 'type';
 
 	/**
 	 * @var array

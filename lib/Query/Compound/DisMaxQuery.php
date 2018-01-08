@@ -15,8 +15,7 @@ class DisMaxQuery extends QueryAbstract implements HasBoostOption
 	use BoostOption;
 
 	const NAME = 'dis_max';
-
-	const OPTION_TIE_BREAKER = 'tie_breaker';
+	private const OPTION_TIE_BREAKER = 'tie_breaker';
 
 	/**
 	 * @var QueryCollection

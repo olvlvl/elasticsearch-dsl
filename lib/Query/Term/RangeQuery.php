@@ -20,13 +20,13 @@ class RangeQuery extends QueryAbstract implements HasBoostOption
 
 	const NAME = 'range';
 
-	const OPTION_FROM = 'from';
-	const OPTION_TO = 'to';
-	const OPTION_GTE = 'gte';
-	const OPTION_GT = 'gt';
-	const OPTION_LTE = 'lte';
-	const OPTION_LT = 'lt';
-	const OPTION_FORMAT = 'format';
+	private const OPTION_FROM = 'from';
+	private const OPTION_TO = 'to';
+	private const OPTION_GTE = 'gte';
+	private const OPTION_GT = 'gt';
+	private const OPTION_LTE = 'lte';
+	private const OPTION_LT = 'lt';
+	private const OPTION_FORMAT = 'format';
 
 	/**
 	 * @var string

@@ -5,23 +5,17 @@ namespace olvlvl\ElasticsearchDSL\Query\Term;
 use olvlvl\ElasticsearchDSL\Query\QueryAbstract;
 
 /**
- * @property string|null $index
- * @property string|null $type
- * @property string|null $id
- * @property string|null $path
- * @property string|null $routing
- *
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/5.6/query-dsl-terms-query.html
  */
 class TermsQuery extends QueryAbstract
 {
 	const NAME = 'terms';
 
-	const OPTION_INDEX = 'index';
-	const OPTION_TYPE = 'type';
-	const OPTION_ID = 'id';
-	const OPTION_PATH = 'path';
-	const OPTION_ROUTING = 'routing';
+	private const OPTION_INDEX = 'index';
+	private const OPTION_TYPE = 'type';
+	private const OPTION_ID = 'id';
+	private const OPTION_PATH = 'path';
+	private const OPTION_ROUTING = 'routing';
 
 	/**
 	 * @var string
@@ -62,7 +56,7 @@ class TermsQuery extends QueryAbstract
 	 */
 	public function type(?string $type)
 	{
-		$this->options[self::OPTION_INDEX] = $type;
+		$this->options[self::OPTION_TYPE] = $type;
 
 		return $this;
 	}
@@ -74,7 +68,7 @@ class TermsQuery extends QueryAbstract
 	 */
 	public function id(?string $id)
 	{
-		$this->options[self::OPTION_INDEX] = $id;
+		$this->options[self::OPTION_ID] = $id;
 
 		return $this;
 	}
@@ -86,7 +80,19 @@ class TermsQuery extends QueryAbstract
 	 */
 	public function path(?string $path)
 	{
-		$this->options[self::OPTION_INDEX] = $path;
+		$this->options[self::OPTION_PATH] = $path;
+
+		return $this;
+	}
+
+	/**
+	 * @param null|string $routing
+	 *
+	 * @return $this
+	 */
+	public function routing(?string $routing)
+	{
+		$this->options[self::OPTION_ROUTING] = $routing;
 
 		return $this;
 	}

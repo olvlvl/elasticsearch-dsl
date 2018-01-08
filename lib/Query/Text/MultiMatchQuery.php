@@ -12,8 +12,8 @@ class MultiMatchQuery extends QueryAbstract implements HasMatchOptions
 
 	const NAME = 'multi_match';
 
-	const OPTION_TYPE = 'type';
-	const OPTION_TIE_BREAKER = 'tie_breaker';
+	private const OPTION_TYPE = 'type';
+	private const OPTION_TIE_BREAKER = 'tie_breaker';
 
 	/**
 	 * @var array
