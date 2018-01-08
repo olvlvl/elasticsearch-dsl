@@ -28,6 +28,7 @@ have a look at the [Query][1] chapter.
         - [bool](Query/Compound/Bool.md)
         - [boosting](Query/Compound/Boosting.md)
         - [constant_score](Query/Compound/ConstantScore.md)
+        - [dis_max](Query/Compound/DisMax.md)
     - Joining
         - [nested](Query/Joining/Nested.md)
 

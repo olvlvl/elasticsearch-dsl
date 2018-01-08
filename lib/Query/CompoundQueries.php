@@ -6,10 +6,8 @@ use olvlvl\ElasticsearchDSL\Helpers;
 use olvlvl\ElasticsearchDSL\Query\Compound\BoolQuery;
 use olvlvl\ElasticsearchDSL\Query\Compound\BoostingQuery;
 use olvlvl\ElasticsearchDSL\Query\Compound\ConstantScoreQuery;
+use olvlvl\ElasticsearchDSL\Query\Compound\DisMaxQuery;
 
-/**
- * @property-read BoolQuery $bool
- */
 trait CompoundQueries
 {
 	/**
@@ -27,6 +25,25 @@ trait CompoundQueries
 	public function bool(): BoolQuery
 	{
 		$this->bool_queries[] = $query = new BoolQuery();
+
+		return $query;
+	}
+
+	/**
+	 * @var BoostingQuery[]
+	 */
+	private $boosting_queries = [];
+
+	protected function get_boosting()
+	{
+		$query = reset($this->boosting_queries);
+
+		return $query ? $query : $this->boosting();
+	}
+
+	public function boosting(float $negative_boost = .5): BoostingQuery
+	{
+		$this->boosting_queries[] = $query = new BoostingQuery($negative_boost);
 
 		return $query;
 	}
@@ -51,20 +68,20 @@ trait CompoundQueries
 	}
 
 	/**
-	 * @var BoostingQuery[]
+	 * @var DisMaxQuery[]
 	 */
-	private $boosting_queries = [];
+	private $dis_max_queries = [];
 
-	protected function get_boosting()
+	protected function get_dis_max()
 	{
-		$query = reset($this->boosting_queries);
+		$query = reset($this->dis_max_queries);
 
-		return $query ? $query : $this->boosting();
+		return $query ? $query : $this->dis_max();
 	}
 
-	public function boosting(float $negative_boost = .5): BoostingQuery
+	public function dis_max(array $options = []): DisMaxQuery
 	{
-		$this->boosting_queries[] = $query = new BoostingQuery($negative_boost);
+		$this->dis_max_queries[] = $query = new DisMaxQuery($options);
 
 		return $query;
 	}
@@ -73,8 +90,9 @@ trait CompoundQueries
 	{
 		return Helpers::filter_merge(
 			$this->bool_queries,
+			$this->boosting_queries,
 			$this->constant_score_queries,
-			$this->boosting_queries
+			$this->dis_max_queries
 		);
 	}
 }

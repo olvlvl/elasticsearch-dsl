@@ -435,6 +435,36 @@ JSON;
 JSON;
 			} ],
 
+			[ function (Query $query) {
+				$query->dis_max->tie_breaker(0.7)->boost(1.2);
+				$query->dis_max->queries->term("age", 34);
+				$query->dis_max->queries->term("age", 35);
+
+				return <<<JSON
+{
+    "query": {
+        "dis_max": {
+            "tie_breaker": 0.7,
+            "boost": 1.2,
+            "queries": [
+                {
+                    "term": {
+                        "age": 34
+                    }
+                },
+                {
+                    "term": {
+                        "age": 35
+                    }
+                }
+            ]
+        }
+    }
+}
+JSON;
+
+			} ],
+
 		];
 	}
 
