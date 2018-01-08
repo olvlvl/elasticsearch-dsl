@@ -2,135 +2,176 @@
 
 namespace olvlvl\ElasticsearchDSL\Query\Term;
 
-class RangeQueryTest extends TestCase
+class RangeQueryTest extends \olvlvl\ElasticsearchDSL\Query\TestCase
 {
-	public function getQueryClass(): string
-	{
-		return RangeQuery::class;
-	}
-
 	public function provideSerialization(): array
 	{
 		return [
 
 			[
 				[
-					$field = uniqid(), [
-						RangeQuery::OPTION_FROM => $from = uniqid(),
-						RangeQuery::OPTION_TO => $to = uniqid(),
-					]
+					'field1'
 				],
-				[
-					$field => [
-						'from' => $from,
-						'to' => $to,
-					]
-				],
+				function (RangeQuery $query) {
+					$query->from(10)->to(20);
+
+					return <<<JSON
+{
+    "range": {
+        "field1": {
+            "from": 10,
+            "to": 20
+        }
+    }
+}
+JSON;
+				}
 			],
 
 			[
 				[
-					$field = uniqid(), [
-						RangeQuery::OPTION_GTE => $gte = uniqid()
-					]
+					'field1'
 				],
-				[
-					$field => [
-						'gte' => $gte
-					]
-				],
+				function (RangeQuery $query) {
+					$query->gte(10);
+
+					return <<<JSON
+{
+    "range": {
+        "field1": {
+            "gte": 10
+        }
+    }
+}
+JSON;
+				}
 			],
 
 			[
 				[
-					$field = uniqid(), [
-						RangeQuery::OPTION_GT => $gt = uniqid()
-					]
+					'field1'
 				],
-				[
-					$field => [
-						'gt' => $gt
-					]
-				],
+				function (RangeQuery $query) {
+					$query->gt(10);
+
+					return <<<JSON
+{
+    "range": {
+        "field1": {
+            "gt": 10
+        }
+    }
+}
+JSON;
+				}
 			],
 
 			[
 				[
-					$field = uniqid(), [
-						RangeQuery::OPTION_LTE => $lte = uniqid()
-					]
+					'field1'
 				],
-				[
-					$field => [
-						'lte' => $lte
-					]
-				],
+				function (RangeQuery $query) {
+					$query->lte(10);
+
+					return <<<JSON
+{
+    "range": {
+        "field1": {
+            "lte": 10
+        }
+    }
+}
+JSON;
+				}
 			],
 
 			[
 				[
-					$field = uniqid(), [
-						RangeQuery::OPTION_LT => $lt = uniqid()
-					]
+					'field1'
 				],
-				[
-					$field => [
-						'lt' => $lt
-					]
-				],
+				function (RangeQuery $query) {
+					$query->lt(10);
+
+					return <<<JSON
+{
+    "range": {
+        "field1": {
+            "lt": 10
+        }
+    }
+}
+JSON;
+				}
 			],
 
 			[
 				[
-					$field = uniqid(), [
-						RangeQuery::OPTION_BOOST => $boost = mt_rand(10, 20) + .5
-					]
+					'field1'
 				],
-				[
-					$field => [
-						'boost' => $boost
-					]
-				],
+				function (RangeQuery $query) {
+					$query->boost(10);
+
+					return <<<JSON
+{
+    "range": {
+        "field1": {
+            "boost": 10
+        }
+    }
+}
+JSON;
+				}
 			],
 
 			[
 				[
-					'born', [
-						RangeQuery::OPTION_GTE => "01/01/2012",
-						RangeQuery::OPTION_LTE => "2013",
-						RangeQuery::OPTION_FORMAT => "dd/MM/yyyy||yyyy",
-					]
+					'born'
 				],
-				[
-					'born' => [
-						'gte' => "01/01/2012",
-						'lte' => "2013",
-						'format' => "dd/MM/yyyy||yyyy",
-					]
-				]
+				function (RangeQuery $query) {
+					$query->gte("01/01/2012")->lte("2013")->format("dd/MM/yyyy||yyyy");
+
+					return <<<JSON
+{
+    "range": {
+        "born": {
+            "gte": "01\/01\/2012",
+            "lte": "2013",
+            "format": "dd\/MM\/yyyy||yyyy"
+        }
+    }
+}
+JSON;
+				}
 			],
 
 			[
 				[
-					$field = uniqid(), [
-						RangeQuery::OPTION_GTE => $gte,
-						RangeQuery::OPTION_GT => $gt,
-						RangeQuery::OPTION_LTE => $lte,
-						RangeQuery::OPTION_LT => $lt,
-						RangeQuery::OPTION_BOOST => $boost,
-					]
+					'born'
 				],
-				[
-					$field => [
-						'gte' => $gte,
-						'gt' => $gt,
-						'lte' => $lte,
-						'lt' => $lt,
-						'boost' => $boost
-					]
-				],
+				function (RangeQuery $query) {
+					$query->gte(1)->gt(2)->lte(3)->lt(4)->boost(1.2);
+
+					return <<<JSON
+{
+    "range": {
+        "born": {
+            "gte": 1,
+            "gt": 2,
+            "lte": 3,
+            "lt": 4,
+            "boost": 1.2
+        }
+    }
+}
+JSON;
+				}
 			],
 
 		];
+	}
+
+	protected function makeInstance(array $args)
+	{
+		return new RangeQuery(...$args);
 	}
 }

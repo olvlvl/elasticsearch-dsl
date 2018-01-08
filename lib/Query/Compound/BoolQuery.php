@@ -87,17 +87,12 @@ class BoolQuery extends QueryAbstract implements HasBoostOption
 		return $this->must_not;
 	}
 
-	/**
-	 * @param array $options
-	 */
-	public function __construct(array $options = [])
+	public function __construct()
 	{
 		$this->must = new MustQuery();
 		$this->filter = new FilterQuery();
 		$this->should = new ShouldQuery();
 		$this->must_not = new MustNotQuery();
-
-		parent::__construct($options);
 	}
 
 	/**

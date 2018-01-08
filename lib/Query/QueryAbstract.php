@@ -13,11 +13,6 @@ abstract class QueryAbstract implements \JsonSerializable
 
 	protected $options = [];
 
-	public function __construct(array $options = [])
-	{
-		$this->handle_options($options, static::OPTIONS);
-	}
-
 	/**
 	 * @inheritdoc
 	 */
@@ -32,12 +27,5 @@ abstract class QueryAbstract implements \JsonSerializable
 	public function jsonSerialize()
 	{
 		return Helpers::filter_not_null($this->options);
-	}
-
-	protected function handle_options(array $options, array $possible_options): void
-	{
-		foreach ($options as $option => $value) {
-			$this->{ $option }($value);
-		}
 	}
 }

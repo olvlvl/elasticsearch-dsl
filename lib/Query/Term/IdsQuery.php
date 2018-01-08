@@ -26,13 +26,10 @@ class IdsQuery extends QueryAbstract
 
 	/**
 	 * @param array $values
-	 * @param array $options
 	 */
-	public function __construct(array $values, array $options = [])
+	public function __construct(array $values)
 	{
 		$this->values = $values;
-
-		parent::__construct($options);
 	}
 
 	/**

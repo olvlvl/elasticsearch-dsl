@@ -41,8 +41,6 @@ class BoostingQuery extends QueryAbstract
 	public function __construct(float $negative_boost = 0.5)
 	{
 		$this->negative_boost = $negative_boost;
-
-		parent::__construct();
 	}
 
 	public function jsonSerialize()

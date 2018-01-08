@@ -26,12 +26,10 @@ class MatchQuery extends QueryAbstract implements HasMatchOptions
 	 */
 	private $query;
 
-	public function __construct(string $field, string $query, array $options = [])
+	public function __construct(string $field, string $query)
 	{
 		$this->field = $field;
 		$this->query = $query;
-
-		parent::__construct($options);
 	}
 
 	/**

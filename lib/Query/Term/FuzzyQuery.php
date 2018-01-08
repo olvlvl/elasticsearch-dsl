@@ -38,11 +38,9 @@ class FuzzyQuery extends QueryAbstract implements HasFuzzyOptions, HasBoostOptio
 	 */
 	private $value;
 
-	public function __construct(string $field, $value, array $options = [])
+	public function __construct(string $field, $value)
 	{
 		$this->field = $field;
 		$this->value = $value;
-
-		parent::__construct($options);
 	}
 }

@@ -19,13 +19,10 @@ class TypeQuery extends QueryAbstract
 
 	/**
 	 * @param string $type
-	 * @param array $options
 	 */
-	public function __construct(string $type, array $options = [])
+	public function __construct(string $type)
 	{
 		$this->type = $type;
-
-		parent::__construct($options);
 	}
 
 	/**

@@ -43,12 +43,10 @@ class RegexpQuery extends QueryAbstract implements HasBoostOption
 	 */
 	private $value;
 
-	public function __construct(string $field, $value, array $options = [])
+	public function __construct(string $field, $value)
 	{
 		$this->field = $field;
 		$this->value = $value;
-
-		parent::__construct($options);
 	}
 
 	public function flags(?string $flags)

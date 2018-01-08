@@ -32,12 +32,10 @@ class MultiMatchQuery extends QueryAbstract implements HasMatchOptions
 	 */
 	private $query;
 
-	public function __construct(array $fields, string $query, array $options = [])
+	public function __construct(array $fields, string $query)
 	{
 		$this->fields = $fields;
 		$this->query = $query;
-
-		parent::__construct($options);
 	}
 
 	public function type(?string $type)

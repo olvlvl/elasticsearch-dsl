@@ -35,15 +35,10 @@ class DisMaxQuery extends QueryAbstract implements HasBoostOption
 		return $this->queries;
 	}
 
-	public function __construct(array $options = [])
+	public function __construct()
 	{
 		$this->queries = new QueryCollection;
-
-		parent::__construct($options + [
-
-			self::OPTION_TIE_BREAKER => 1.0
-
-		]);
+		$this->tie_breaker(1.0);
 	}
 
 	public function tie_breaker(float $tie_breaker)

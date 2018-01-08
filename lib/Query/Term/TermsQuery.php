@@ -46,14 +46,11 @@ class TermsQuery extends QueryAbstract
 	/**
 	 * @param string $field
 	 * @param array $values
-	 * @param array $options
 	 */
-	public function __construct(string $field, array $values, array $options = [])
+	public function __construct(string $field, array $values)
 	{
 		$this->field = $field;
 		$this->values = $values;
-
-		parent::__construct($options);
 	}
 
 	/**

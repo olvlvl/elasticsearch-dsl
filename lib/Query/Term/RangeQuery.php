@@ -45,11 +45,9 @@ class RangeQuery extends QueryAbstract implements HasBoostOption
 	 */
 	private $field;
 
-	public function __construct(string $field, array $options = [])
+	public function __construct(string $field)
 	{
 		$this->field = $field;
-
-		parent::__construct($options);
 	}
 
 	/**

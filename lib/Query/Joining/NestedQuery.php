@@ -35,12 +35,10 @@ class NestedQuery extends QueryAbstract
 		return $this->query;
 	}
 
-	public function __construct(string $path, array $options = [])
+	public function __construct(string $path)
 	{
 		$this->path = $path;
 		$this->query = new Query();
-
-		parent::__construct($options);
 	}
 
 	/**

@@ -6,12 +6,10 @@ class ConstantScoreQuery extends BoolQuery
 {
 	const NAME = 'constant_score';
 
-	public function __construct(float $score = 1.0, array $options = [])
+	public function __construct(float $score = 1.0)
 	{
-		parent::__construct([
+		$this->boost($score);
 
-			self::OPTION_BOOST => $score,
-
-		] + $options);
+		parent::__construct();
 	}
 }

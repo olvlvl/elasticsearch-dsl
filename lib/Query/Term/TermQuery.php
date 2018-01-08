@@ -38,13 +38,10 @@ class TermQuery extends QueryAbstract implements HasBoostOption
 	/**
 	 * @param string $field
 	 * @param mixed $value
-	 * @param array $options
 	 */
-	public function __construct(string $field, $value, array $options = [])
+	public function __construct(string $field, $value)
 	{
 		$this->field = $field;
 		$this->value = $value;
-
-		parent::__construct($options);
 	}
 }
