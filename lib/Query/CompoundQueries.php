@@ -4,6 +4,7 @@ namespace olvlvl\ElasticsearchDSL\Query;
 
 use olvlvl\ElasticsearchDSL\Helpers;
 use olvlvl\ElasticsearchDSL\Query\Compound\BoolQuery;
+use olvlvl\ElasticsearchDSL\Query\Compound\BoostingQuery;
 use olvlvl\ElasticsearchDSL\Query\Compound\ConstantScoreQuery;
 
 /**
@@ -49,11 +50,31 @@ trait CompoundQueries
 		return $query;
 	}
 
+	/**
+	 * @var BoostingQuery[]
+	 */
+	private $boosting_queries = [];
+
+	protected function get_boosting()
+	{
+		$query = reset($this->boosting_queries);
+
+		return $query ? $query : $this->boosting();
+	}
+
+	public function boosting(float $negative_boost = .5): BoostingQuery
+	{
+		$this->boosting_queries[] = $query = new BoostingQuery($negative_boost);
+
+		return $query;
+	}
+
 	protected function jsonSerializeCompoundQueries(): array
 	{
 		return Helpers::filter_merge(
 			$this->bool_queries,
-			$this->constant_score_queries
+			$this->constant_score_queries,
+			$this->boosting_queries
 		);
 	}
 }

@@ -26,6 +26,7 @@ have a look at the [Query][1] chapter.
         - [wildcard](Query/Term/Wildcard.md)
     - Compound queries
         - [bool](Query/Compound/Bool.md)
+        - [boosting](Query/Compound/Boosting.md)
         - [constant_score](Query/Compound/ConstantScore.md)
     - Joining
         - [nested](Query/Joining/Nested.md)

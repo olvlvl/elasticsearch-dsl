@@ -408,7 +408,32 @@ JSON;
     }
 }
 JSON;
-			} ]
+			} ],
+
+			[ function (Query $query) {
+				$query->boosting(.2)->positive->term("field1", "value1");
+				$query->boosting->negative->term("field2", "value2");
+
+				return <<<JSON
+{
+    "query": {
+        "boosting": {
+            "positive": {
+                "term": {
+                    "field1": "value1"
+                }
+            },
+            "negative": {
+                "term": {
+                    "field2": "value2"
+                }
+            },
+            "negative_boost": 0.2
+        }
+    }
+}
+JSON;
+			} ],
 
 		];
 	}
