@@ -3,31 +3,13 @@
 namespace olvlvl\ElasticsearchDSL\Query;
 
 use olvlvl\ElasticsearchDSL\Helpers;
-use olvlvl\ElasticsearchDSL\Query\Compound\BoolQuery;
 use olvlvl\ElasticsearchDSL\Query\Compound\BoostingQuery;
 use olvlvl\ElasticsearchDSL\Query\Compound\ConstantScoreQuery;
 use olvlvl\ElasticsearchDSL\Query\Compound\DisMaxQuery;
 
 trait CompoundQueries
 {
-	/**
-	 * @var BoolQuery[]
-	 */
-	private $bool_queries = [];
-
-	protected function get_bool()
-	{
-		$query = reset($this->bool_queries);
-
-		return $query ? $query : $this->bool();
-	}
-
-	public function bool(): BoolQuery
-	{
-		$this->bool_queries[] = $query = new BoolQuery();
-
-		return $query;
-	}
+	use BoolQueries;
 
 	/**
 	 * @var BoostingQuery[]

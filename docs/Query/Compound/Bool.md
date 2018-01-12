@@ -44,6 +44,48 @@ $query->should
     ->term("tag", "elasticsearch");
 ```
 
+If the `bool` query is used in a filter context and it has should clauses then at least one
+`should` clause is required to match.
+
+```json
+{
+    "bool": {
+        "must": {
+            "match": { "field1": "query1" }
+        },
+        "filter": [
+            {
+                "bool": {
+                    "should": [
+                        { "term": { "field2": "value2" } },
+                        { "term": { "field3": "value3" } }
+                    ]
+                }
+            },
+            {
+                "bool": {
+                    "must": {
+                        "term": { "field4": "value4" }
+                    }
+                }
+            }
+        ]
+    }
+}
+```
+```php
+<?php
+
+use olvlvl\ElasticsearchDSL\Query\Compound\BoolQuery;
+
+$query = new BoolQuery; 
+$query->must->match('field1', "query1");
+$query->filter->bool()->should
+    ->term("field2", "value2")
+    ->term("field3", "value3");
+$query->filter->bool()->must
+    ->term("field4", "value4");
+```
 
 
 

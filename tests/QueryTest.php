@@ -544,6 +544,58 @@ JSON
 				}
 			],
 
+			[
+				<<<JSON
+{
+    "query": {
+        "bool": {
+            "must": {
+                "match": {
+                    "field1": "query1"
+                }
+            },
+            "filter": [
+                {
+                    "bool": {
+                        "should": [
+                            {
+                                "term": {
+                                    "field2": "value2"
+                                }
+                            },
+                            {
+                                "term": {
+                                    "field3": "value3"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "bool": {
+                        "must": {
+                            "term": {
+                                "field4": "value4"
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}
+JSON
+				, [],
+				function (Query $query) {
+					$query->bool->must->match('field1', "query1");
+					$query->bool->filter->bool()->should
+						->term("field2", "value2")
+						->term("field3", "value3");
+					$query->bool->filter->bool()->must
+						->term("field4", "value4");
+				}
+			],
+
 		];
 	}
 

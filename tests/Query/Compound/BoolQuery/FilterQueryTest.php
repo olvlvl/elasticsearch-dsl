@@ -52,6 +52,48 @@ JSON
 				}
 			],
 
+			[
+				<<<JSON
+{
+    "filter": [
+        {
+            "bool": {
+                "should": [
+                    {
+                        "term": {
+                            "field1": "value1"
+                        }
+                    },
+                    {
+                        "term": {
+                            "field2": "value2"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "bool": {
+                "must": {
+                    "term": {
+                        "field3": "value3"
+                    }
+                }
+            }
+        }
+    ]
+}
+JSON
+				, [],
+				function (FilterQuery $query) {
+					$query->bool()->should
+						->term("field1", "value1")
+						->term("field2", "value2");
+					$query->bool()->must
+						->term("field3", "value3");
+				}
+			],
+
 		];
 	}
 

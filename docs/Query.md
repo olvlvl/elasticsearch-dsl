@@ -133,6 +133,54 @@ $query->bool->filter->term("grade", "2");
 
 
 
+## Boolean queries in a filter context
+
+```json
+{
+    "query": {
+        "bool": {
+            "must": {
+                "match": { "field1": "query1" }
+            },
+            "filter": [
+                {
+                    "bool": {
+                        "should": [
+                            { "term": { "field2": "value2" } },
+                            { "term": { "field3": "value3" } }
+                        ]
+                    }
+                },
+                {
+                    "bool": {
+                        "must": {
+                            "term": { "field4": "value4" }
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}
+```
+```php
+<?php
+
+use olvlvl\ElasticsearchDSL\Query;
+
+$query = new Query; 
+$query->bool->must->match('field1', "query1");
+$query->bool->filter->bool()->should
+    ->term("field2", "value2")
+    ->term("field3", "value3");
+$query->bool->filter->bool()->must
+    ->term("field4", "value4");
+```
+
+
+
+
+
 ## A nested query
 
 The following example demonstrates how to create a nested query:
