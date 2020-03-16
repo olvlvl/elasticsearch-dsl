@@ -1,12 +1,12 @@
 # customization
 
 PACKAGE_NAME = olvlvl/elasticsearch-dsl
-PACKAGE_VERSION = 0.1
-PHPUNIT = phpunit
+PACKAGE_VERSION = 1.0
+PHPUNIT_VERSION = phpunit-7.5.phar
+PHPUNIT_FILENAME = build/$(PHPUNIT_VERSION)
+PHPUNIT = php $(PHPUNIT_FILENAME)
 
 # do not edit the following lines
-
-all: vendor
 
 usage:
 	@echo "test:  Runs the test suite.\ndoc:   Creates the documentation.\nclean: Removes the documentation, the dependencies and the Composer files."
@@ -17,19 +17,22 @@ vendor:
 update:
 	@COMPOSER_ROOT_VERSION=$(PACKAGE_VERSION) composer update
 
-autoload: vendor
-	@composer dump-autoload
+$(PHPUNIT_FILENAME):
+	mkdir -p build
+	curl -o $(PHPUNIT_FILENAME) -L https://phar.phpunit.de/$(PHPUNIT_VERSION)
 
-test: all
+test-setup: vendor $(PHPUNIT_FILENAME)
+
+test: test-setup
 	@$(PHPUNIT)
 
-test-coverage: all
+test-coverage: test-setup
 	@mkdir -p build/coverage
 	@$(PHPUNIT) --coverage-html build/coverage
 
-test-coveralls: all
+test-coveralls: test-setup
 	@mkdir -p build/logs
-	COMPOSER_ROOT_VERSION=$(PACKAGE_VERSION) composer require satooshi/php-coveralls '^2.0'
+	COMPOSER_ROOT_VERSION=$(PACKAGE_VERSION) composer require php-coveralls/php-coveralls '^2.0'
 	@$(PHPUNIT) --coverage-clover build/logs/clover.xml
 	php vendor/bin/php-coveralls -v
 
@@ -46,4 +49,4 @@ clean:
 	@rm -fR vendor
 	@rm -f composer.lock
 
-.PHONY: all autoload doc clean test test-coverage test-coveralls update
+.PHONY: all doc clean test test-coverage test-coveralls test-setup update
